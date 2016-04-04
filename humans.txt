@@ -1,0 +1,7 @@
+/* TEAM */
+George Skouroupathis
+Site: astrocamel.com
+Github: http://github.com/gskouroupathis
+
+/* SITE */
+Software: jekyll, github pages.
