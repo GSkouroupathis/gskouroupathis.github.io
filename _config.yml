@@ -1,2 +1,18 @@
-name: George Skouroupathis
+name: Astrocamel
+description: Blog/Portfolio of George Skouroupathis
+meta_description: "astrocamel, Blog, Portfolio, George Skouroupathis"
+
 markdown: kramdown
+highlighter: rouge
+logo: false
+paginate: 15
+baseurl: ""
+domain_name: "https://www.astrocamel.com"
+plugins: [jekyll-paginate]
+
+# Details for the RSS feed generator
+url: ""
+author: "George Skouroupathis"
+
+# Disqus config
+disqus-shortname: ""

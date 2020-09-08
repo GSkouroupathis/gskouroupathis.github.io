@@ -1,46 +1,67 @@
 ---
 layout: default
-title: Astrocamel.com
+title: Home
+cover: false
+about: 'about.html'
 ---
-<div class="masthead">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a href="#">About</a></li>
-    <li><a href="http://gist.github.com/GSkouroupathis/">Snippets</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <h3 class="muted"><img src="marketing-narrow_files/ac.jpg" width="30" height="30" style="position:relative; top:-2px" /> Astrocamel.com</h3>
-</div>
 
-<hr />
+<header class="main-header {% if page.cover %}" style="background-image: url({{ page.cover }}) {%else%}no-cover{% endif %}">
+    <nav class="main-nav overlay clearfix">
+            {% if page.logo %}
+                <a class="blog-logo" href="{{ site.baseurl }}">
+                    <img src="{{ page.logo }}" alt="Blog Logo" />
+                </a>
+            {% endif %}
+        <a class="subscribe-button icon-feed" href="{{'feed.xml' | relative_url }} ">RSS</a>
+        <a class="subscribe-button" href="{{'https://github.com/GSkouroupathis' | relative_url }} ">Code</a>
+        <a class="subscribe-button" href="{{'about.html' | relative_url }} ">About Me</a>&nbsp;
+        <a class="subscribe-button" href="{{'' | relative_url }} ">Blog</a>
+    </nav>
+    <div class="vertical">
+        <div class="main-header-content inner">
+            <h2 class="page-title-pre">My name is</h2><h2 class="page-title">George Skouroupathis</h2>
+            <h2 class="page-description">
+                {% if site.description %} and this is my blog/portfolio {% endif %}
+                <p><a  href="/assets/cv.pdf">View my <b>C</b>urriculum <b>V</b>itae</a></p>
+            </h2>
+        </div>
+    </div>
+    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
+</header>
 
-<div class="jumbotron">
-  <a href="#">
-    <img src="marketing-narrow_files/me.jpg" class="meLOL" />
-  </a>
-  <p class="lead">My name is</p>
-  <h1>George Skouroupathis</h1>
-  <p class="lead">and this is my portfolio.</p>
-  <a class="btn btn-large btn-success" href="marketing-narrow_files/cv.pdf">View my CV</a>
-</div>
 
-      <hr />
+<main id="content" class="content" role="main">
 
-<div class="row-fluid marketing">
-  <div class="span12">
-    <a href="http://github.com/GSkouroupathis/">
-      <img src="marketing-narrow_files/gh.jpg" class="github" />
-    </a>
 
-    <a href="https://uk.linkedin.com/in/george-skouroupathis-4279a45a">
-      <img src="marketing-narrow_files/li.jpg" class="linkedin" />
-    </a>
+    <div class="extra-pagination inner">
+        {% include pagination.html %}
+    </div>
 
-    <a href="https://www.facebook.com/george.skouroupathis">
-      <img src="marketing-narrow_files/fb.jpg" class="facebook" />
-    </a>
+    {% for post in paginator.posts %}
 
-    <a href="https://plus.google.com/109182550444844999415/posts">
-      <img src="marketing-narrow_files/gp.jpg" class="gplus" />
-    </a>
-  </div>
-</div>
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        </header>
+        <section class="post-excerpt">
+            {{ post.excerpt }} <a class="read-more" href="{{ post.url | relative_url }}">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            {% if site.author %}
+                <img class="author-thumb" src="{{'/assets/images/me.jpg' | relative_url}}" alt="Author's profile picture" nopin="nopin" />
+                {{ site.author }}
+            {% endif %}
+            {% if post.categories.size > 0 %}
+                {{ post.categories | array_to_sentence_string | prepend: 'on ' }}
+            {% endif %}
+            <time class="post-date" datetime="{{ post.date | date:"%Y-%m-%d" }}">
+                {{ post.date | date_to_string }}
+            </time>
+        </footer>
+    </article>
+
+    {% endfor %}
+
+    {% include pagination.html %}
+
+</main>

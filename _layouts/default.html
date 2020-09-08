@@ -1,107 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>Astrocamel.com</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <!-- Styles -->
-    <link href="marketing-narrow_files/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
+    <title>{{ site.name }} - {{ site.description }}</title>
+    <meta name="description" content="{{ site.meta_description}}" />
 
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 15px 0;
-      }
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 0;
-        text-align: center;
-      }
+    <link rel="stylesheet" type="text/css" href="{{'/assets/css/screen.css' | relative_url}}" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="{{'/assets/css/main.css' | relative_url}} " />
 
-      img.meLOL {
-        margin: 0 0 5px 0;
-	      transition: all 0.25s ease-out;
-	      -webkit-border-radius: 78px;
-        -moz-border-radius: 78px;
-        border-radius: 78px;
-      	border: 1px solid #EEE;
-        opacity:0.85;
-        filter:alpha(opacity=85); /* For IE8 and earlier */
-      }
+</head>
+<body class="{% if page.post_class %}{{page.post_class}}{% else %}home-template{% endif %}">
 
-      img.meLOL:hover {
-	      -moz-box-shadow: 0 0 15px #CF6;
-		    -webkit-box-shadow: 0 0 15px #CF6;
-			  box-shadow: 0 0 15px #1C4E80;
-			  opacity:1;
-        filter:alpha(opacity=100); /* For IE8 and earlier */
-			}
+    {{ content }}
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="{{ site.baseurl }}">{{ site.name }}</a> &copy;
+              {{"now" | date: "%Y"}} &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll and &#x2764 using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
 
-      .jumbotron h1 {
-        font-size: 33px;
-        line-height: 0.4;
-      }
+    <script type="text/javascript" src="{{'/assets/js/jquery-1.11.1.min.js' | relative_url}}"></script>
+    <script type="text/javascript" src="{{'/assets/js/jquery.fitvids.js' | relative_url }}"></script>
+    <script type="text/javascript" src="{{'/assets/js/index.js' | relative_url }}"></script>
 
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
 
-      /* Supporting marketing content */
-      .marketing {
-        margin: 50px 0;
-      }
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '{{ site.google_analytics }}']);
+      _gaq.push(['_trackPageview']);
 
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-    </style>
-    <link href="marketing-narrow_files/bootstrap-responsive.css" rel="stylesheet">
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="marketing-narrow_files/favico.ico"s>
-  </head>
-
-  <body>
-    <div class="container-narrow">
-      {{ content }}
-
-      <hr />
-
-      <div class="footer">
-        <p>Copyright © Astrocamel.com since 2008 - <a href="https://twitter.com/gskouroupathis">I don't Tweet</a></p>
-      </div>
-
-    </div> <!-- /container -->
-
-    <!-- Javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="marketing-narrow_files/jquery.js"></script>
-    <script src="marketing-narrow_files/bootstrap-alert.js"></script>
-    <script src="marketing-narrow_files/bootstrap-button.js"></script>
-
-  </body>
+    </script>
+</body>
 </html>
