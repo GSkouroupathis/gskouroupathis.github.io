@@ -487,7 +487,7 @@ margin on the iframe, cause it breaks stuff. */
 
 .main-nav {
     position: relative;
-    padding: 35px 40px;
+    padding: 10px 40px;
     margin: 0 0 30px 0;
 }
 
@@ -598,7 +598,7 @@ margin on the iframe, cause it breaks stuff. */
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: inline-block;
-    float: right;
+    /*float: right;*/
     height: 38px;
     padding: 0 20px;
     border: transparent 1px solid;
@@ -675,7 +675,7 @@ margin on the iframe, cause it breaks stuff. */
 }
 
 .page-title {
-    margin: 10px 0 10px 0;
+    margin: 70px 0 10px 0;
     font-size: 5rem;
     letter-spacing: -1px;
     font-weight: 700;
@@ -1348,6 +1348,7 @@ body:not(.post-template) .post-title {
 
     .main-nav {
         padding: 15px;
+        text-align: right;
     }
 
     blockquote {
@@ -1361,7 +1362,7 @@ body:not(.post-template) .post-title {
         height: auto;
         min-height: 240px;
         height: 60%;
-        padding: 15% 0;
+        padding: 15% 0 5% 0;
     }
 
     .scroll-down,
@@ -1379,6 +1380,7 @@ body:not(.post-template) .post-title {
     .page-title {
         font-size: 4rem;
         letter-spacing: -1px;
+        margin-top: 30px;
     }
 
     .page-description {
