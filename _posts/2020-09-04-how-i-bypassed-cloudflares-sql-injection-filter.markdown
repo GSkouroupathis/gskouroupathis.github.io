@@ -295,6 +295,7 @@ And this is how I bypassed Cloudflare WAF's SQL injection protection. I got a
 free t-shirt and a place in [Cloudflare's HoF][cf-hof].
 
 #### Mitigation
+<p>Cloudlfare reviewed and fixed the vulnerability a few days after my report.</p>
 The safest way to mitigate SQL injections on your databases is prepared
 statements. These come in most database interaction libraries for most
 languages. You can find a full list of ways to mitigate SQL injections at
