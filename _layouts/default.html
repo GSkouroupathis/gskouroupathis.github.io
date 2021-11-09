@@ -28,13 +28,13 @@
     <link rel="shortcut icon" type="image/ico" href="/assets/images/favico.ico"/>
 </head>
 <body class="{% if page.post_class %}{{page.post_class}}{% else %}home-template{% endif %}">
-	<!--
+
   <script>
   if (location.protocol !== 'https:') {
     location.replace(`https:${location.href.substring(location.protocol.length)}`);
 }
   </script>
--->
+
     {{ content }}
     <footer class="site-footer clearfix">
       <section class="copyright">
