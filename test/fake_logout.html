@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            FAKE LOGOUT
+        </title>
+        <style>
+            .btn {
+                    
+                display: inline-block;
+                    outline: 0;
+                    cursor: pointer;
+                    text-align: center;
+                    border: 0;
+                    padding: 7px 16px;
+                    min-height: 36px;
+                    min-width: 36px;
+                    color: #ffffff;
+                    background: #008060;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    font-size: 14px;
+                    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+                    :hover {
+                        background: #006e52;
+                    }
+                
+            }
+            
+            #main {
+                width: 50%;
+                margin: 0 auto 0 auto;
+                background-color: antiquewhite;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            /*
+            const handleSignOut = () => {
+                chrome.runtime.sendMessage({ message: "logout" }, function (response) {
+                    if (response === "success") {
+                        navigate("SignIn");
+                    }
+                });
+            };
+            */
+            const handleSignOut = () => {
+                var data = { type: "eth:send", message: "logout" };
+                console.log('click');
+                window.postMessage(data, "*");
+            }            
+            
+        </script>
+        <div id="main">
+            <h1>FAKE LOGOUT</h1>
+            <form>
+                <input class="btn" type="button" onclick="handleSignOut()" value="LOGOUT" />
+            </form>
+        </div>
+    </body>
+</html>
