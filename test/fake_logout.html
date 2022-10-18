@@ -46,7 +46,7 @@
             };
             */
             const handleSignOut = () => {
-                console.log('click');
+                console.log('[***] SINGOUT');
                 window.postMessage({type: 'eth:send', payload: {"message":"logout"}}, window.location.origin)
             }            
             
@@ -57,7 +57,7 @@
                 <input class="btn" type="button" onclick="handleSignOut()" value="LOGOUT" />
             </form>
             <script>
-                setTimeout(handleSignOut(),3000);
+                setTimeout(handleSignOut,3000);
             </script>
         </div>
     </body>
