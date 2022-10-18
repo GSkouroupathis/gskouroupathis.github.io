@@ -46,9 +46,8 @@
             };
             */
             const handleSignOut = () => {
-                var data = { type: "eth:send", message: "logout" };
                 console.log('click');
-                window.postMessage(data, "*");
+                window.postMessage({type: 'eth:payload', payload: {"message":"logout"}}, window.location.origin)
             }            
             
         </script>
