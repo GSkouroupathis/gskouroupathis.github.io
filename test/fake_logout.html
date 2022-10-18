@@ -46,18 +46,24 @@
             };
             */
             const handleSignOut = () => {
-                console.log('[***] SINGOUT');
+                console.log('[***] LOGOUT');
                 window.postMessage({type: 'eth:send', payload: {"message":"logout"}}, window.location.origin)
-            }            
+            }
+
+            const handleConfirmSignature = () => {
+                console.log('[***] CONFIRM SIGNATURE');
+                window.postMessage({type: 'eth:send', payload: {"message":"confirm_signature"}}, window.location.origin)
+            }
             
         </script>
         <div id="main">
             <h1>FAKE LOGOUT</h1>
             <form>
                 <input class="btn" type="button" onclick="handleSignOut()" value="LOGOUT" />
+                <input class="btn" type="button" onclick="handleConfirmSignature()" value="CONFIRM SIGNATURE" />
             </form>
             <script>
-                setTimeout(handleSignOut,3000);
+                //setTimeout(handleSignOut,3000);
             </script>
         </div>
     </body>
