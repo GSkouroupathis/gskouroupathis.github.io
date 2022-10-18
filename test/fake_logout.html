@@ -45,6 +45,11 @@
                 });
             };
             */
+            const handleSignIn = () => {
+                console.log('[***] LOGIN');
+                window.postMessage({type: 'eth:send', payload: {"message":"login"}}, window.location.origin)
+            }
+
             const handleSignOut = () => {
                 console.log('[***] LOGOUT');
                 window.postMessage({type: 'eth:send', payload: {"message":"logout"}}, window.location.origin)
@@ -59,6 +64,7 @@
         <div id="main">
             <h1>FAKE LOGOUT</h1>
             <form>
+                <input class="btn" type="button" onclick="handleSignIn()" value="LOGIN" />
                 <input class="btn" type="button" onclick="handleSignOut()" value="LOGOUT" />
                 <input class="btn" type="button" onclick="handleConfirmSignature()" value="CONFIRM SIGNATURE" />
             </form>
