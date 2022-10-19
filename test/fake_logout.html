@@ -49,35 +49,52 @@
                 console.log('[***] LOGIN');
                 window.postMessage({type: 'eth:send', payload: {"message":"login"}}, window.location.origin)
             }
+            
 
             const handleSignOut = () => {
                 console.log('[***] LOGOUT');
                 window.postMessage({type: 'eth:send', payload: {"message":"logout"}}, window.location.origin)
             }
-
+            
+            
             const handleNotTrustedSignOut = () => {
                 console.log('[***] NOT TRUSTED LOGOUT');
                 var btn = document.getElementById("logoutButton");
                 btn.click();
             }
             
+            
             const handleConfirmSignature = () => {
                 console.log('[***] CONFIRM SIGNATURE');
                 window.postMessage({type: 'eth:send', payload: {"message":"confirm_signature"}}, window.location.origin)
             }
             
+            
+            const handleEth_requestAccounts = () => {
+                console.log('[***] ETH_REQUESTACCOUNTS');
+                window.postMessage({type: 'eth:send', payload: {"id":3, jsonrpc:"2.0", "method":"eth_requestAccounts", "params":[]}}, window.location.origin)
+            }
+
+
         </script>
         <div id="main">
             <h1>FAKE LOGOUT</h1>
             <form>
-                
+
                 <input class="btn" type="button" onclick="handleSignIn()" value="LOGIN" />
+                <hr />
 
                 <input id="logoutButton" class="btn" type="button" onclick="handleSignOut()" value="LOGOUT" />
+                <hr />
 
                 <input class="btn" type="button" onclick="handleNotTrustedSignOut()" value="NOT TRUSTED LOGOUT" />
+                <hr />
 
                 <input class="btn" type="button" onclick="handleConfirmSignature()" value="CONFIRM SIGNATURE" />
+                <hr />
+
+                <input class="btn" type="button" onclick="handleEth_requestAccounts()" value="ETH_REQUESTACCOUNTS" />
+                <hr />
 
             </form>
             <script>
