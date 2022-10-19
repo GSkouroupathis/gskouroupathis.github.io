@@ -55,6 +55,12 @@
                 window.postMessage({type: 'eth:send', payload: {"message":"logout"}}, window.location.origin)
             }
 
+            const handleNotTrustedSignOut = () => {
+                console.log('[***] NOT TRUSTED LOGOUT');
+                var btn = document.getElementById("logoutButton");
+                btn.click();
+            }
+            
             const handleConfirmSignature = () => {
                 console.log('[***] CONFIRM SIGNATURE');
                 window.postMessage({type: 'eth:send', payload: {"message":"confirm_signature"}}, window.location.origin)
@@ -64,9 +70,15 @@
         <div id="main">
             <h1>FAKE LOGOUT</h1>
             <form>
+                
                 <input class="btn" type="button" onclick="handleSignIn()" value="LOGIN" />
-                <input class="btn" type="button" onclick="handleSignOut()" value="LOGOUT" />
+
+                <input id="logoutButton" class="btn" type="button" onclick="handleSignOut()" value="LOGOUT" />
+
+                <input class="btn" type="button" onclick="handleNotTrustedSignOut()" value="NOT TRUSTED LOGOUT" />
+
                 <input class="btn" type="button" onclick="handleConfirmSignature()" value="CONFIRM SIGNATURE" />
+
             </form>
             <script>
                 //setTimeout(handleSignOut,3000);
