@@ -5,6 +5,10 @@
     </head>
     <body style="background:#444">
         <script type="module">
+            // PROTOTYPE POLLUTION
+            window.p = {}
+            window.p["__proto__"]["isConnected"] = true
+
             //var payload = '\uD83D\uDC04'.repeat(10000000);
             //console.log("[*] " + payload);
             //document.title = payload;
