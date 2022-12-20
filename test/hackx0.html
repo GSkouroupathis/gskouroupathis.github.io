@@ -15,6 +15,11 @@
             //document.title = payload;
         </script>
         <script>
+
+            function accept_connection() {
+                dispatch({ type: 'ACCEPT_INCOMING_CONNECTION' });
+            }
+
             function prot_pollute() {
                 window.exodus.p = {}
                 window.exodus.p["__proto__"]["isConnected"] = true
@@ -57,10 +62,11 @@
         </script>
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #3A6">
         <h1 style="color:#E00;text-shadow: 2px 2px 4px #0f0;">
-        19
+        20
         </h1>
         <h2>Can we hack x0-w?</h2>
         <input type="button" value="algo_connect" onclick="algo_connect()" />
+        <input type="button" value="accept_connection" onclick="accept_connection()" />
         <input type="button" value="prot_pollute" onclick="prot_pollute()" />
         <input type="button" value="hack" onclick="hack()" />
         <input type="button" value="hack2" onclick="hack2()" />
