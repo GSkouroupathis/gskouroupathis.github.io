@@ -18,20 +18,20 @@
 
         <script>
 
-            class EventDispatcher extends EventTarget {
+            class MyEventDispatcher extends EventTarget {
                 doSomething() {
                     this.dispatchEvent(new Event('a'));
                 }
             }
 
-            const eventDispatcher = new EventDispatcher();
+            const myEventDispatcher = new MyEventDispatcher();
 
             function accept_connection() {
-                eventDispatcher.addEventListener('a', (e) => {
+                myEventDispatcher.addEventListener('a', (e) => {
                     console.log('Instance fired "a".', e);
                 });
 
-                eventDispatcher.doSomething();
+                myEventDispatcher.doSomething();
             }
 
             function prot_pollute() {
