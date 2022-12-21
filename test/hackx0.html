@@ -34,8 +34,9 @@
                 myEventDispatcher.doSomething();
             }
 
+            /*
             async function transaction() {
-                const algodClient = new algosdk.Algodv2(/* ... */)
+                const algodClient = new algosdk.Algodv2()
                 const suggestedParams = await algodClient.getTransactionParams().do()
                 const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
@@ -48,6 +49,7 @@
                     transaction.toByte(),
                 ])
             }
+            */
 
             function prot_pollute() {
                 window.exodus.p = {}
