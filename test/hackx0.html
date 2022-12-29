@@ -76,7 +76,7 @@
 
                 let assetID = (5235235);
 
-                params = await algodclient.getTransactionParams().do();
+                params = await algodClient.getTransactionParams().do();
                 //comment out the next two lines to use suggested fee
                 params.fee = 1000;
                 params.flatFee = true;
