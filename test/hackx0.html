@@ -36,6 +36,7 @@
             }
 
 
+            // closeRemainerTo vuln
             async function transaction() {
                 const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
                 const port = "";
@@ -46,12 +47,15 @@
                 const suggestedParams = await algodClient.getTransactionParams().do();
                 console.log("[*] suggestedParams: ");
                 console.log(suggestedParams);
+                const enc = new TextEncoder();
+                const note = enc.encode("<script>alert(1)</script>");
                 const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
                     from: window.exodus.algorand.address,
                     to: window.exodus.algorand.address,
+                    note: note,
                     closeRemainerTo: window.exodus.algorand.address,
-                    amount: 1000000, // Equals 1 ALGO
+                    amount: 500000, // Equals 1 ALGO
                 });
 
                 const signedTransactions = await window.exodus.algorand.signTransaction([
