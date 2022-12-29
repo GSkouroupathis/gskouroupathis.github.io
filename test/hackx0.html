@@ -57,6 +57,8 @@
                 const signedTransactions = await window.exodus.algorand.signTransaction([
                     transaction.toByte(),
                 ]);
+                console.log('Tran: ');
+                console.log(signedTransactions);
             }
 
 
