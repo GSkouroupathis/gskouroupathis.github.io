@@ -45,7 +45,7 @@
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
                 const suggestedParams = await algodClient.getTransactionParams().do();
                 console.log("[*] suggestedParams: ");
-                console.log(suggesterParams)
+                console.log(suggestedParams);
                 const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
                     from: window.exodus.algorand.address,
