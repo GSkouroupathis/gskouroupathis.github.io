@@ -48,7 +48,7 @@
                 console.log("[*] suggestedParams: ");
                 console.log(suggestedParams);
                 const enc = new TextEncoder();
-                const note = enc.encode("<script>alert(1)</script>");
+                const note = enc.encode('<script>alert(1)<\/script>');
                 const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
                     from: window.exodus.algorand.address,
