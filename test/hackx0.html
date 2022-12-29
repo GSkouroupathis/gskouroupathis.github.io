@@ -82,7 +82,7 @@
                 params.flatFee = true;
 
                 const enc = new TextEncoder();
-                const note = enc.encode("<script>alert(1)</script>");
+                const note = enc.encode("<script>alert(1)<\/script>");
 
                 let sender = window.exodus.algorand.address;
                 let recipient = sender;
