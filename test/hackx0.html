@@ -239,7 +239,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #F66">
         <h1 style="color:#0F0;text-shadow: 2px 2px 4px #0f0;">
-        40
+        41
         </h1>
         <h2>Can we hack x0-w?</h2>
         
@@ -257,7 +257,7 @@
         <span id="ethConnected"></span>
         <script>
             var node = document.getElementById('ethConnected');
-            if (ethereum.isConnected()) {
+            if (window.exodus.ethereum.isConnected()) {
                 node.innerHTML('CONNECTED');
             } else {
                 node.innerHTML('DISCONNECTED');
