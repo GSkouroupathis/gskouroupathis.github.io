@@ -168,8 +168,22 @@
 
 
             // Sign transaction
-            async function eth_sign_transaction() {
-                
+            async function request_eth_accounts() {
+                try {
+                    const resp = await window.exodus.ethereum.request({
+                        method: 'eth_accounts',
+                        params: [],
+                    })
+                } catch (switchError) {
+                    // This error code indicates that the chain is not supported by Exodus.
+                    if (switchError.code === 4902) {
+                        console.log('[-] Handle chain not supported.');
+                    }
+                    // Handle other "switch" errors.
+                }
+
+                console.log('[*] Response: ');
+                console.log(resp);
             }
 
 
@@ -228,7 +242,7 @@
         39
         </h1>
         <h2>Can we hack x0-w?</h2>
-        " />
+        
         <hr />
         <h3>ALGO</h3>
         <hr />
@@ -241,13 +255,16 @@
         <h3>ETH</h3>
         <hr />
         <script>
+            <span id="ethConnected"></span>
+            var node = document.getElementById('ethConnected');
             if (ethereum.isConnected()) {
-                document.write('span style="color:green">CONNECTED</span>');
+                node.innerHTML('CONNECTED');
             } else {
-                document.write('<span style="color:red">DISCONNECTED</span>');
+                node.innerHTML('DISCONNECTED');
             }
         </script>
-        <input type="button" value="eth_sign_transaction" onclick="eth_sign_transaction()" />
+        
+        <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
         <input type="button" value="eth_transaction" onclick="eth_transaction()" />
         <input type="button" value="eth_asset_transaction" onclick="eth_asset_transaction()" />
         <hr />
