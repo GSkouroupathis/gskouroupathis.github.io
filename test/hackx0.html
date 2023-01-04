@@ -203,7 +203,31 @@
                     to: '0x5dD5B3665fd4401C09473D000DecabEa9F0c0514',
                     gas: '0x76c0', // 30400
                     gasPrice: '0x9184e72a000', // 10000000000000
-                    value: '0x221b262dd80000',
+                    value: '0x5af3107a40000',
+                }
+              
+                try {
+                    const resp = await window.exodus.ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [transaction],
+                    })
+                    // For 'eth_sendTransaction', `resp` will be a transaction hash hexadecimal string.
+                    console.log(`[*] eth_asset_transaction: ${resp}`)
+                    
+                } catch (err) {
+                    console.log(`[-] eth_asset_transaction: ${err}`)
+                }
+
+            }
+
+
+            async function eth_sendTransaction_withData() {
+                const transaction = {
+                    from: '0xe7cA97fFe64282CC104dB55cab2BbA4A4e7B552E',
+                    to: '0x5dD5B3665fd4401C09473D000DecabEa9F0c0514',
+                    gas: '0x76c0', // 30400
+                    gasPrice: '0x9184e72a000', // 10000000000000
+                    value: '0x5af3107a40000',
                     data: '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675',
                 }
               
@@ -273,9 +297,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #FF6">
-        <h1 style="color:#D1D;text-shadow: 2px 2px 4px #0ff;">
-        54
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #D1D">
+        <h1 style="color:#D1D;text-shadow: 2px 2px 4px #FF6;">
+        55
         </h1>
         <h2>Can we hack x0-w?</h2>
         
@@ -293,7 +317,7 @@
         
         <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
         <input type="button" value="eth_sendTransaction" onclick="eth_sendTransaction()" />
-        <input type="button" value="eth_asset_transaction" onclick="eth_asset_transaction()" />
+        <input type="button" value="eth_sendTransaction" onclick="eth_sendTransaction_withData()" />
         <input type="button" value="eth_compileSolidity" onclick="eth_compileSolidity()" />
         <hr />
         <h3>REST</h3>
