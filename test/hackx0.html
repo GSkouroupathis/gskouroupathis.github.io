@@ -217,6 +217,17 @@
 
             }
 
+
+            async function eth_compileSolidity() {
+                window.exodus.ethereum.request({
+                    method: 'eth_compileSolidity',
+                    params: ["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }",],
+                })
+                .then(data => console.log(`[*] eth_compileSolidity: ${data}`))
+                .catch(e => console.log('[-] eth_get_balance ERROR ', e))
+            }
+            
+
 ///////////////////////////////////////////////////////////////////////////////////
 /////////////////////// REST //////////////////////////////////////////////////////            
 ///////////////////////////////////////////////////////////////////////////////////
@@ -260,7 +271,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #F66">
         <h1 style="color:#0F0;text-shadow: 2px 2px 4px #0ff;">
-        44
+        45
         </h1>
         <h2>Can we hack x0-w?</h2>
         
@@ -279,6 +290,7 @@
         <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
         <input type="button" value="request_eth_get_balance" onclick="request_eth_get_balance()" />
         <input type="button" value="eth_asset_transaction" onclick="eth_asset_transaction()" />
+        <input type="button" value="eth_asset_transaction" onclick="eth_compileSolidity()" />
         <hr />
         <h3>REST</h3>
         <hr />
