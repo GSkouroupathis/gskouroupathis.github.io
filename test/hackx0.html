@@ -46,10 +46,10 @@
 
             // Sign transaction
             async function sign_transaction() {
-                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                const baseServer = "https://algo.a.exodus.io/";
                 const port = "";
                 const token = {
-                    'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq',
+                    'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052'
                 };
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
                 
@@ -274,7 +274,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #F66">
         <h1 style="color:#F10;text-shadow: 2px 2px 4px #0ff;">
-        52
+        53
         </h1>
         <h2>Can we hack x0-w?</h2>
         
