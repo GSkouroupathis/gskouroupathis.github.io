@@ -116,12 +116,15 @@
                 console.log("[*] txn: ");
                 console.log(txn);
 
-                const { signedTransactions } = await window.exodus.algorand.signAndSendTransaction([
+                const result = await window.exodus.algorand.connect();
+                console.log({result})
+                
+                const  signedTransactions  = await window.exodus.algorand.signAndSendTransaction([
                     txn.toByte(),
                 ]);
 
                 console.log('[*] Transaction: ');
-                console.log(signedTransactions);
+                console.log({signedTransactions});
             }
 
 
@@ -271,7 +274,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #F66">
         <h1 style="color:#F10;text-shadow: 2px 2px 4px #0ff;">
-        51
+        52
         </h1>
         <h2>Can we hack x0-w?</h2>
         
