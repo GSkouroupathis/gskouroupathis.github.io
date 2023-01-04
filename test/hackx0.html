@@ -184,8 +184,13 @@
             }
 
 
-            async function eth_transaction() {
-                
+            async function request_eth_get_balance() {
+                window.exodus.ethereum.request({
+                    method: 'eth_get_balance',
+                    params: ["0xe7cA97fFe64282CC104dB55cab2BbA4A4e7B552E", "latest"],
+                })
+                .then(balance => console.log(`[*] eth_get_balance: ${balance}`))
+                .catch(e => console.log('[-] eth_get_balance ERROR ', e))
             }
 
 
@@ -253,7 +258,7 @@
         <hr />
         
         <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
-        <input type="button" value="eth_transaction" onclick="eth_transaction()" />
+        <input type="button" value="request_eth_get_balance" onclick="request_eth_get_balance()" />
         <input type="button" value="eth_asset_transaction" onclick="eth_asset_transaction()" />
         <hr />
         <h3>REST</h3>
