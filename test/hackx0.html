@@ -87,10 +87,10 @@
 
             // closeRemainerTo vuln
             async function transaction() {
-                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                const baseServer = "https://algo.a.exodus.io/";
                 const port = "";
                 const token = {
-                    'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq',
+                    'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052'
                 };
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
                 
@@ -197,13 +197,14 @@
             }
 
 
-            async function eth_asset_transaction() {
+            async function eth_sendTransaction() {
                 const transaction = {
                     from: '0xe7cA97fFe64282CC104dB55cab2BbA4A4e7B552E',
                     to: '0x5dD5B3665fd4401C09473D000DecabEa9F0c0514',
                     gas: '0x76c0', // 30400
                     gasPrice: '0x9184e72a000', // 10000000000000
                     value: '0x221b262dd80000',
+                    data: '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675',
                 }
               
                 try {
@@ -272,9 +273,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #F66">
-        <h1 style="color:#F10;text-shadow: 2px 2px 4px #0ff;">
-        53
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #FF6">
+        <h1 style="color:#D1D;text-shadow: 2px 2px 4px #0ff;">
+        54
         </h1>
         <h2>Can we hack x0-w?</h2>
         
@@ -291,7 +292,7 @@
         <hr />
         
         <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
-        <input type="button" value="request_eth_get_balance" onclick="request_eth_get_balance()" />
+        <input type="button" value="eth_sendTransaction" onclick="eth_sendTransaction()" />
         <input type="button" value="eth_asset_transaction" onclick="eth_asset_transaction()" />
         <input type="button" value="eth_compileSolidity" onclick="eth_compileSolidity()" />
         <hr />
