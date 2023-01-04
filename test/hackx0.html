@@ -44,54 +44,14 @@
             }
 
 
-            // Sign transaction
-            async function sign_transaction() {
-                const baseServer = "https://algo.a.exodus.io/";
-                const port = "";
-                const token = {
-                    'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052'
-                };
-                const algodClient = new algosdk.Algodv2(token, baseServer, port);
-                
-                //Check your balance
-                let accountInfo = await algodClient.accountInformation('RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY').do();
-                console.log("Account balance: %d microAlgos", accountInfo.amount);
-                
-                // Construct the transaction
-                let suggestedParams = await algodClient.getTransactionParams().do();
-                
-                const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
-                const enc = new TextEncoder();
-                const note = enc.encode('<script>alert(1)<\/script>');
-                let amount = 1000000; // equals 1 ALGO
-                let sender = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
-
-                let txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-                    suggestedParams,
-                    from: sender,
-                    to: receiver,
-                    amount: amount
-                });
-
-                console.log("[*] txn: ");
-                console.log(txn);
-
-                const { signedTransactions } = await window.exodus.algorand.signTransaction([
-                    txn.toByte(),
-                ]);
-
-                console.log('[*] Transaction: ');
-                console.log(signedTransactions);
-            }
+            
 
 
             // closeRemainerTo vuln
             async function transaction() {
                 const baseServer = "https://algo.a.exodus.io/";
                 const port = "";
-                const token = {
-                    'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052'
-                };
+                const token = { 'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052' };
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
                 
                 //Check your balance
@@ -105,26 +65,27 @@
                 
                 let amount = 1000000; // equals 1 ALGO
                 let sender = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
-
+​
                 let txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
                     from: sender,
                     to: receiver,
                     amount: amount
                 });
-
+​
                 console.log("[*] txn: ");
                 console.log(txn);
-
+​
                 const result = await window.exodus.algorand.connect();
                 console.log({result})
-                
-                const  signedTransactions  = await window.exodus.algorand.signAndSendTransaction([
+                const tmp = await window.exodus.algorand.signAndSendTransaction([
                     txn.toByte(),
                 ]);
-
+                console.log({tmp})
+                const { signedTransactions } = tmp
+​
                 console.log('[*] Transaction: ');
-                console.log({signedTransactions});
+                console.log(signedTransactions);
             }
 
 
@@ -299,7 +260,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #D1D">
         <h1 style="color:#D1D;text-shadow: 2px 2px 4px #FF6;">
-        55
+        56
         </h1>
         <h2>Can we hack x0-w?</h2>
         
@@ -308,7 +269,6 @@
         <hr />
         <input type="button" value="algo_connect" onclick="algo_connect()" />
         <input type="button" value="accept_connection" onclick="accept_connection()" />
-        <input type="button" value="sign_transaction" onclick="sign_transaction()" />
         <input type="button" value="transaction" onclick="transaction()" />
         <input type="button" value="asset_transaction" onclick="asset_transaction()" />
         <hr />
@@ -317,7 +277,7 @@
         
         <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
         <input type="button" value="eth_sendTransaction" onclick="eth_sendTransaction()" />
-        <input type="button" value="eth_sendTransaction" onclick="eth_sendTransaction_withData()" />
+        <input type="button" value="eth_sendTransaction_withData" onclick="eth_sendTransaction_withData()" />
         <input type="button" value="eth_compileSolidity" onclick="eth_compileSolidity()" />
         <hr />
         <h3>REST</h3>
