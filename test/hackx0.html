@@ -170,10 +170,10 @@
             // Sign transaction
             async function request_eth_accounts() {
                 try {
-                    const resp = await window.exodus.ethereum.request({
+                    window.exodus.ethereum.request({
                         method: 'eth_accounts',
                         params: [],
-                    })
+                    }).then(address => console.log(`[*]eth_accounts: ${address}`))
                 } catch (switchError) {
                     // This error code indicates that the chain is not supported by Exodus.
                     if (switchError.code === 4902) {
@@ -181,9 +181,6 @@
                     }
                     // Handle other "switch" errors.
                 }
-
-                console.log('[*] Response: ');
-                console.log(resp);
             }
 
 
@@ -238,8 +235,8 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #F66">
-        <h1 style="color:#0F0;text-shadow: 2px 2px 4px #0f0;">
-        41
+        <h1 style="color:#0F0;text-shadow: 2px 2px 4px #0ff;">
+        42
         </h1>
         <h2>Can we hack x0-w?</h2>
         
@@ -254,15 +251,6 @@
         <hr />
         <h3>ETH</h3>
         <hr />
-        <span id="ethConnected"></span>
-        <script>
-            var node = document.getElementById('ethConnected');
-            if (window.exodus.ethereum.isConnected()) {
-                node.innerHTML('CONNECTED');
-            } else {
-                node.innerHTML('DISCONNECTED');
-            }
-        </script>
         
         <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
         <input type="button" value="eth_transaction" onclick="eth_transaction()" />
