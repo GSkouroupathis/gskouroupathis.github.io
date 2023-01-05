@@ -65,15 +65,15 @@
                 // Construct the transaction
                 let suggestedParams = await algodClient.getTransactionParams().do();
                 
-                const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+                const receiver = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
                 
                 let amount = 100000; // equals 0.1 ALGO
                 
 
                 const enc = new TextEncoder();
-                const note = enc.encode("hsi3");
+                const note = enc.encode("hsi4");
 
-                //let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+                //let closeRemainderTo = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
 
                 let txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
@@ -128,13 +128,14 @@
                 // Construct the transaction
                 let suggestedParams = await algodClient.getTransactionParams().do();
                 
-                const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+                const receiver = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
                 
                 let amount = 100000; // equals 0.1 ALGO
                 
 
                 const enc = new TextEncoder();
-                const note = enc.encode("hsi2");
+                const note = enc.encode("hsib4");
+                const note2 = note + '-2';
 
                 //let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
 
@@ -154,7 +155,7 @@
                     from: sender,
                     to: receiver,
                     amount: amount,
-                    note: note
+                    note: note2
                 });
 
                 console.log("[*] txn2: ");
