@@ -65,15 +65,15 @@
                 // Construct the transaction
                 let suggestedParams = await algodClient.getTransactionParams().do();
                 
-                const receiver = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
+                const receiver = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
                 
                 let amount = 100000; // equals 0.1 ALGO
                 
 
                 const enc = new TextEncoder();
-                const note = enc.encode("note5");
+                const note = enc.encode("note6");
 
-                //let closeRemainderTo = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
+                //let closeRemainderTo = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
 
                 let txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
@@ -128,18 +128,18 @@
                 // Construct the transaction
                 let suggestedParams = await algodClient.getTransactionParams().do();
                 
-                const receiver = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
+                const receiver = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
                 
                 let amount = 100000; // equals 0.1 ALGO
                 
 
                 const enc = new TextEncoder();
-                let myNote = "doublenote5";
+                let myNote = "doublenote6";
                 let myNote2 = myNote + '-2';
                 const note = enc.encode(myNote);
                 const note2 = enc.encode(myNote2);
 
-                //let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+                //let closeRemainderTo = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
 
                 let txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
@@ -354,9 +354,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #AF3">
-        <h1 style="color:#0Ad;text-shadow: 2px 2px 4px #D34;">
-        75
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #A4f">
+        <h1 style="color:#fA0;text-shadow: 2px 2px 4px #D34;">
+        76
         </h1>
         <h2>x0-w</h2>
         
