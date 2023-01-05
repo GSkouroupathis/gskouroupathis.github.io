@@ -62,11 +62,18 @@
                 let amount = 1000000; // equals 1 ALGO
                 let sender = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
 
+                const enc = new TextEncoder();
+                const note = enc.encode("<script>alert(1)<\/script>");
+
+                let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+
                 let txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
                     from: sender,
                     to: receiver,
-                    amount: amount
+                    amount: amount,
+                    note: note,
+                    closeRemainderTo: closeRemainderTo
                 });
 
                 console.log("[*] txn: ");
