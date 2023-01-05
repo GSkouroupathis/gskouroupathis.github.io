@@ -102,6 +102,8 @@
                 const result = await window.exodus.algorand.connect();
                 console.log({result});
 
+                algosdk.assignGroupID([txn1,txn2])
+
                 try {
                     const tmp = await window.exodus.algorand.signAndSendTransaction([
                         txn1.toByte(),
@@ -290,7 +292,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #AF3">
         <h1 style="color:#0Ad;text-shadow: 2px 2px 4px #D34;">
-        67
+        68
         </h1>
         <h2>x0-w</h2>
         
