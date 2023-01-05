@@ -45,12 +45,9 @@
 
             // closeRemainerTo vuln
             async function algo_transaction() {
-                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                const baseServer = "https://algo.a.exodus.io/";
                 const port = "";
-                const token = {
-                    'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq',
-                };
-
+                const token = { 'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052' };
                 
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
         
@@ -73,7 +70,7 @@
                 
 
                 const enc = new TextEncoder();
-                const note = enc.encode("hsi1");
+                const note = enc.encode("hsi2");
 
                 //let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
 
@@ -292,7 +289,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #AF3">
         <h1 style="color:#0Ad;text-shadow: 2px 2px 4px #D34;">
-        71
+        72
         </h1>
         <h2>x0-w</h2>
         
