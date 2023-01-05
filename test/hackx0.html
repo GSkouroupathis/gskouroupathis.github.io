@@ -68,6 +68,76 @@
             }
 
 
+            async function sign_then_submit_double_transactions() {
+
+                try {
+                    const receiver = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
+                    const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                    const port = "";
+                    const token = { 'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq', };
+                    
+                    const algodClient = new algosdk.Algodv2(token, baseServer, port);
+
+                    let sender = window.exodus.algorand.address;
+                    console.log('[*] sender: ')
+                    console.log(sender)
+
+                    let suggestedParams = await algodClient.getTransactionParams().do();
+                
+                    let amount = 100000; // equals 0.1 ALGO
+                    let amount2 = 200000; // equals 0.2 ALGO
+
+                    const enc = new TextEncoder();
+                    let myNote = "doubleassetnote9";
+                    let myNote2 = myNote + '-2';
+                    const note = enc.encode(myNote);
+                    const note2 = enc.encode(myNote2);
+
+                    let txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+                        suggestedParams,
+                        from: sender,
+                        to: receiver,
+                        amount: amount,
+                        note: note
+                    });
+
+                    let txn2 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+                        suggestedParams,
+                        from: sender,
+                        to: receiver,
+                        amount: amount2,
+                        note: note2
+                    });
+
+                    algosdk.assignGroupID([txn1,txn2]);
+
+                    const signedTransactions = await window.exodus.algorand.signTransaction([
+                        txn1.toByte(),
+                        txn2.toByte(),
+                    ])
+
+                    let groupedSignedTxns = signedTransactions;
+
+                    let tx = (await algodClient.sendRawTransaction(groupedSignedTxns).do());
+                    console.log("[*] Transaction : " + tx.txId);
+
+                    await waitForConfirmation(algodClient, tx.txId);
+
+                } catch (err) {
+                    console.log("[-] ERR: ", err);
+                }
+            }
+
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+
+
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+
+
             async function sign_then_submit_double_asset_transactions() {
 
                 try {
@@ -450,7 +520,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #A4f">
         <h1 style="color:#fA0;text-shadow: 2px 2px 4px #D34;">
-        78
+        79
         </h1>
         <h2>x0-w</h2>
         
@@ -459,6 +529,7 @@
         <hr />
         <input type="button" value="algo_connect" onclick="algo_connect()" />
         <input type="button" value="accept_connection" onclick="accept_connection()" />
+        <input type="button" value="sign_then_submit_double_transactions" onclick="sign_then_submit_double_transactions()" />
         <input type="button" value="sign_then_submit_double_asset_transactions" onclick="sign_then_submit_double_asset_transactions()" />
         <input type="button" value="algo_transaction" onclick="algo_transaction()" />
         <input type="button" value="algo_double_transaction" onclick="algo_double_transaction()" />
