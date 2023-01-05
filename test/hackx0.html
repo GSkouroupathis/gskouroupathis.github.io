@@ -50,10 +50,16 @@
                 const token = {
                     'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq',
                 };
+
+                
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
         
+                let sender = window.exodus.algorand.address;
+                console.log('[*] sender: ')
+                console.log(sender)
+
                 //Check your balance
-                let accountInfo = await algodClient.accountInformation().do();
+                let accountInfo = await algodClient.accountInformation(sender).do();
                 console.log('[*] accountInfo: ')
                 console.log(accountInfo)
                 console.log("Account balance: %d microAlgos", accountInfo.amount);
@@ -64,9 +70,7 @@
                 const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
                 
                 let amount = 500000; // equals 0.5 ALGO
-                let sender = window.exodus.algorand.address;
-                console.log('[*] sender: ')
-                console.log(sender)
+                
 
                 const enc = new TextEncoder();
                 const note = enc.encode("hi");
@@ -279,9 +283,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #AAD">
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #AF3">
         <h1 style="color:#0Ad;text-shadow: 2px 2px 4px #D34;">
-        65
+        66
         </h1>
         <h2>x0-w</h2>
         
