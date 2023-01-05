@@ -65,7 +65,7 @@
                     await algodclient.statusAfterBlock(lastround).do();
                 }
                 console.log('Transaction confirmed');
-            };
+            }
 
 
             async function sign_then_submit_GroupAssetTransactions() {
@@ -83,8 +83,6 @@
                     console.log(sender)
 
                     let suggestedParams = await algodClient.getTransactionParams().do();
-                    
-                    const receiver = "RN6KHCDQEH4VONJWXQ4QULCAX5R2NM2DFDCVYTU3ZTKGFUQGFS5NTPTHJY";
                 
                     let amount = 100000; // equals 0.1 ALGO
 
