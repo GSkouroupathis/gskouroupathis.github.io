@@ -118,10 +118,10 @@
 
                     let groupedSignedTxns = signedTransactions;
 
-                    //let tx = (await algodClient.sendRawTransaction(groupedSignedTxns).do());
-                    //console.log("[*] Transaction : " + tx.txId);
+                    let tx = (await algodClient.sendRawTransaction(groupedSignedTxns).do());
+                    console.log("[*] Transaction : " + tx.txId);
 
-                    //await waitForConfirmation(algodClient, tx.txId);
+                    await waitForConfirmation(algodClient, tx.txId);
 
                 } catch (err) {
                     console.log("[-] ERR: ", err);
