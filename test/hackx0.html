@@ -207,69 +207,7 @@
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//
             
-            async function algo_transaction_closeRemainderTo() {
-                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
-                const port = "";
-                const token = { 'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq', };
-                
-                const algodClient = new algosdk.Algodv2(token, baseServer, port);
-        
-                let sender = window.exodus.algorand.address;
-                console.log('[*] sender: ')
-                console.log(sender)
-
-                //Check your balance
-                let accountInfo = await algodClient.accountInformation(sender).do();
-                console.log('[*] accountInfo: ')
-                console.log(accountInfo)
-                console.log("Account balance: %d microAlgos", accountInfo.amount);
-                
-                // Construct the transaction
-                let suggestedParams = await algodClient.getTransactionParams().do();
-                
-                const receiver = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
-                
-                
-                let amount = 100000; // equals 0.1 ALGO
-                
-
-                const enc = new TextEncoder();
-                const note = enc.encode("note86");
-
-
-                let txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-                    suggestedParams,
-                    from: sender,
-                    to: receiver,
-                    amount: amount,
-                    note: note,
-                    closeRemainderTo: receiver
-                });
-
-                console.log("[*] txn1: ");
-                console.log(txn1);
-
-                algosdk.assignGroupID([txn1])
-
-                try {
-                    const connectResult = await window.exodus.algorand.connect();
-                    console.log({connectResult});
-                    const tmp = await window.exodus.algorand.signAndSendTransaction([
-                        txn1.toByte(),
-                    ]);
-                    console.log({tmp});
-                    const { signedTransactions } = tmp;
-
-                    console.log('[*] Transaction: ');
-                    console.log(signedTransactions);
-                } catch (e) {
-                    console.log('[-] algo_transaction ERROR: ');
-                    console.log(e);
-                }
-            }
-
-
-
+            
             async function algo_transaction() {
                 const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
                 const port = "";
@@ -430,7 +368,49 @@
                     let revocationTarget = undefined;
                     let closeRemainderTo = undefined;
                     const enc = new TextEncoder();
-                    let myNote = "assetnote89";
+                    let myNote = "assetnote90";
+                    let note = enc.encode(myNote);;
+                    let amount = 1;
+                    let txn = algosdk.makeAssetTransferTxnWithSuggestedParams(sender, recipient, closeRemainderTo, revocationTarget,
+                        amount,  note, assetID, params);
+                    
+                    algosdk.assignGroupID([txn]);
+
+                    const connectResult = await window.exodus.algorand.connect();
+                    console.log({connectResult});
+
+                    const tmp = await window.exodus.algorand.signAndSendTransaction([
+                        txn.toByte(),
+                    ]);
+                    const { signedTransactions } = tmp;
+                    console.log('[*] Transaction: ');
+                    console.log(signedTransactions);
+                })().catch(e => {
+                    console.log('[-] ERROR: ');
+                    console.log(e);
+                });
+            }
+
+
+            async function asset_transaction_closeRemainderTo() {
+                const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
+                const port = "";
+                const token = { 'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq', };
+                
+                const algodClient = new algosdk.Algodv2(token, baseServer, port);
+
+                
+
+                (async () => {
+
+                    let assetID = 312769;
+                    let params = await algodClient.getTransactionParams().do();
+                    let sender = window.exodus.algorand.address;
+                    let recipient = '3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA';
+                    let revocationTarget = undefined;
+                    let closeRemainderTo = '3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA';
+                    const enc = new TextEncoder();
+                    let myNote = "assetRemaindernote90";
                     let note = enc.encode(myNote);;
                     let amount = 1;
                     let txn = algosdk.makeAssetTransferTxnWithSuggestedParams(sender, recipient, closeRemainderTo, revocationTarget,
@@ -588,7 +568,7 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #DAA">
         <h1 style="color:#5FE;text-shadow: 2px 2px 4px #236;">
-        89
+        90
         </h1>
         <h2>x0-w</h2>
         
@@ -596,13 +576,13 @@
         <h3>ALGO</h3>
         <hr />
         <input type="button" value="algo_connect" onclick="algo_connect()" />
-        <input type="button" value="algo_transaction_closeRemainderTo" onclick="algo_transaction_closeRemainderTo()" />
         <input type="button" value="accept_connection" onclick="accept_connection()" />
         <input type="button" value="sign_then_submit_double_transactions" onclick="sign_then_submit_double_transactions()" />
         <input type="button" value="sign_then_submit_double_asset_transactions" onclick="sign_then_submit_double_asset_transactions()" />
         <input type="button" value="algo_transaction" onclick="algo_transaction()" />
         <input type="button" value="algo_double_transaction" onclick="algo_double_transaction()" />
         <input type="button" value="asset_transaction" onclick="asset_transaction()" />
+        <input type="button" value="asset_transaction_closeRemainderTo" onclick="asset_transaction_closeRemainderTo()" />
         <hr />
         <h3>ETH</h3>
         <hr />
