@@ -419,18 +419,19 @@
                 
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
 
-                const enc = new TextEncoder();
-                let myNote = "assetnote87";
-                const note = enc.encode(myNote);
+                
 
                 (async () => {
+
                     let assetID = 13300122; // change to your own assetID
                     let params = await algodClient.getTransactionParams().do();
                     let sender = window.exodus.algorand.address;
                     let recipient = '3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA';
                     let revocationTarget = undefined;
                     let closeRemainderTo = undefined;
-                    let note = note;
+                    const enc = new TextEncoder();
+                    let myNote = "assetnote87";
+                    let note = enc.encode(myNote);;
                     let amount = 0;
                     let txn = algosdk.makeAssetTransferTxnWithSuggestedParams(sender, recipient, closeRemainderTo, revocationTarget,
                         amount,  note, assetID, params);
@@ -583,7 +584,7 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #4Af">
-        <h1 style="color:#53E;text-shadow: 2px 2px 4px #F90;">
+        <h1 style="color:#53E;text-shadow: 2px 2px 4px #2F0;">
         87
         </h1>
         <h2>x0-w</h2>
