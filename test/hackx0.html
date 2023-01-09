@@ -415,37 +415,38 @@
             async function asset_transaction() {
                 const baseServer = "https://mainnet-algorand.api.purestake.io/ps2";
                 const port = "";
-                const token = {
-                    'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq',
-                };
+                const token = { 'X-API-key': 'tOke4cvG802DWgj3lTTu166RPeMBqze4aZGl6miq', };
+                
                 const algodClient = new algosdk.Algodv2(token, baseServer, port);
 
-                let assetID = (5235235);
-
-                params = await algodClient.getTransactionParams().do();
-                //comment out the next two lines to use suggested fee
-                params.fee = 1000;
-                params.flatFee = true;
-
                 const enc = new TextEncoder();
-                const note = enc.encode("<script>alert(1)<\/script>");
+                let myNote = "assetnote87";
+                const note = enc.encode(myNote);
 
-                let sender = window.exodus.algorand.address;
-                let recipient = 'KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM';
-                let revocationTarget = undefined;
-                let closeRemainderTo = 'KUARVTRTHI5CNBLLWJ2MXFCJECD34HXZJHWNC2NWEOXUSTRKKMRUYKFBOM';
-                // We are sending 0 assets
-                amount = 0;
+                (async () => {
+                    let assetID = 13300122; // change to your own assetID
+                    let params = await client.getTransactionParams().do();
+                    let sender = window.exodus.algorand.address;
+                    let recipient = '3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA';
+                    let revocationTarget = undefined;
+                    let closeRemainderTo = undefined;
+                    let note = note;
+                    let amount = 0;
+                    let txn = algosdk.makeAssetTransferTxnWithSuggestedParams(sender, recipient, closeRemainderTo, revocationTarget,
+                        amount,  note, assetID, params);
+                    
+                    algosdk.assignGroupID([txn1,txn2]);
 
+                    const connectResult = await window.exodus.algorand.connect();
+                    console.log({connectResult});
 
-                // signing and sending "txn" allows sender to begin accepting asset specified by creator and index
-                let opttxn = algosdk.makeAssetTransferTxnWithSuggestedParams(sender, recipient, closeRemainderTo, revocationTarget, amount, note, assetID, params);
-
-                const signedTransactions = await window.exodus.algorand.signAndSendTransaction([
-                opttxn.toByte(),
-                ]);
-                console.log('Tran: ');
-                console.log(signedTransactions);
+                    const tmp = await window.exodus.algorand.signAndSendTransaction([
+                        txn.toByte(),
+                    ]);
+                    console.log("[*] Transaction : " + tx.txId);
+                })().catch(e => {
+                    console.log(e);
+                });
             }
 
 
@@ -581,9 +582,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #A4f">
-        <h1 style="color:#F90;text-shadow: 2px 2px 4px #531;">
-        86
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #4Af">
+        <h1 style="color:#531;text-shadow: 2px 2px 4px #F90;">
+        87
         </h1>
         <h2>x0-w</h2>
         
