@@ -425,7 +425,7 @@
 
                 (async () => {
                     let assetID = 13300122; // change to your own assetID
-                    let params = await client.getTransactionParams().do();
+                    let params = await algodClient.getTransactionParams().do();
                     let sender = window.exodus.algorand.address;
                     let recipient = '3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA';
                     let revocationTarget = undefined;
@@ -583,7 +583,7 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #4Af">
-        <h1 style="color:#531;text-shadow: 2px 2px 4px #F90;">
+        <h1 style="color:#53E;text-shadow: 2px 2px 4px #F90;">
         87
         </h1>
         <h2>x0-w</h2>
