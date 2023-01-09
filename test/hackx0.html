@@ -234,9 +234,8 @@
                 
 
                 const enc = new TextEncoder();
-                const note = enc.encode("note85");
+                const note = enc.encode("note86");
 
-                let closeRemainderTo = "3D5ROSIORET5ZGMS2R3AVOSHXIJC2RO3IJ7UJKKOEQSHQXMPXPJ2MW3SSA";
 
                 let txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
                     suggestedParams,
@@ -244,7 +243,7 @@
                     to: receiver,
                     amount: amount,
                     note: note,
-                    closeRemainderTo: closeRemainderTo
+                    closeRemainderTo: receiver
                 });
 
                 console.log("[*] txn1: ");
@@ -583,8 +582,8 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #A4f">
-        <h1 style="color:#135;text-shadow: 2px 2px 4px #fda;">
-        85
+        <h1 style="color:#F90;text-shadow: 2px 2px 4px #531;">
+        86
         </h1>
         <h2>x0-w</h2>
         
