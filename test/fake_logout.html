@@ -2,9 +2,24 @@
 <html>
     <head>
         <title>
-            FAKE LOGOUT
+            🛝
         </title>
         <style>
+            body {
+                padding: 0;
+                margin: 0;
+            }
+
+            #header {
+                width:100%;
+                background-color: #353555;
+                color:#EeB540;
+            }
+
+            .btn2 {
+                background: #803030!important;
+            }
+            
             .btn {
                     
                 display: inline-block;
@@ -28,23 +43,35 @@
             }
             
             #main {
-                width: 50%;
+                width: 85%;
                 margin: 0 auto 0 auto;
                 background-color: antiquewhite;
+            }
+
+            .subtitle {
+                color: #FeA570;
+                background:black;
+                text-shadow: 2px 1px #1f0e0f;
             }
         </style>
     </head>
     <body>
+        <div id="header">
+            v1
+        </div>
         <script>
-            /*
-            const handleSignOut = () => {
-                chrome.runtime.sendMessage({ message: "logout" }, function (response) {
-                    if (response === "success") {
-                        navigate("SignIn");
-                    }
-                });
-            };
-            */
+            
+            const handleEth_requestAccounts2 = () => {
+                console.log('[***] ETH_REQUESTACCOUNTS_2');
+                window.postMessage({type: 'eth:send', payload: {"id":3, jsonrpc:"2.0", "method":"eth_requestAccounts", "params":[]}}, window.location.origin)
+            }
+
+
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+
             const handleSignIn = () => {
                 console.log('[***] LOGIN');
                 window.postMessage({type: 'eth:send', payload: {"message":"login"}}, window.location.origin)
@@ -83,9 +110,23 @@
 
         </script>
         <div id="main">
-            <h1>FAKE LOGOUT</h1>
-            <form>
+            <h1>🛝</h1>
 
+            <form>
+                <h2 class="subtitle">v2</h2>
+                <input class="btn2 btn" type="button" onclick="handleEth_requestAccounts2()" value="ETH_REQUESTACCOUNTS_2" />
+                <hr />
+
+            </form>
+
+
+            <!--           ###                -->
+            <!--           ###                -->
+            <!--           ###                -->
+            
+
+            <form>
+                <h2 class="subtitle">v1</h2>
                 <input class="btn" type="button" onclick="handleSignIn()" value="LOGIN" />
                 <hr />
 
