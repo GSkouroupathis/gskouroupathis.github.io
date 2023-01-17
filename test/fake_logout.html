@@ -71,7 +71,7 @@
                 } else {solId = document.getElementById('solId').value;
                     console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: ' + solId + ', solSerializedTx: ' + solSerializedTx);
                 }
-                window.postMessage({ type: 'sol:send', payload: {"id": solId, "method":payloadMethod}, "params": {"serializedTx": solSerializedTx} }, window.location.origin)
+                window.postMessage({ type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin)
             }
 
 
@@ -118,7 +118,7 @@
 
         </script>
         <div id="main">
-            <h1>🛝 update 3 </h1>
+            <h1>🛝 update 4 </h1>
 
             <form>
                 <h2 class="subtitle">v2</h2>
