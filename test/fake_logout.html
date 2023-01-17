@@ -62,9 +62,10 @@
         </div>
         <script>
             
-            const handleEth_requestAccounts2 = () => {
-                console.log('[***] ETH_REQUESTACCOUNTS_2');
-                window.postMessage({type: 'eth:send', payload: {"id":3, jsonrpc:"2.0", "method":"eth_requestAccounts", "params":[]}}, window.location.origin)
+            const handleSolSend2 = () => {
+                let payloadMethod = document.getElementsById('handleSolSend2PayloadMethod')[0].value;
+                console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod);
+                window.postMessage({ type: 'sol:send', payload: {"method":payloadMethod} }, window.location.origin)
             }
 
 
@@ -115,7 +116,9 @@
 
             <form>
                 <h2 class="subtitle">v2</h2>
-                <input class="btn2 btn" type="button" onclick="handleEth_requestAccounts2()" value="ETH_REQUESTACCOUNTS_2" />
+
+                <input class="btn2 btn" type="button" onclick="handleSolSend2()" value="handleSolSend2" />
+                <input type="text" id="handleSolSend2PayloadMethod" placeholder="payload.method" />
                 <hr />
 
             </form>
@@ -128,6 +131,7 @@
 
             <form>
                 <h2 class="subtitle">v1</h2>
+
                 <input class="btn" type="button" onclick="handleSignIn()" value="LOGIN" />
                 <hr />
 
