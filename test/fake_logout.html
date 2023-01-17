@@ -58,12 +58,12 @@
     </head>
     <body>
         <div id="header">
-            v1
+            v2
         </div>
         <script>
             
             const handleSolSend2 = () => {
-                let payloadMethod = document.getElementById('handleSolSend2PayloadMethod')[0].value;
+                let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
                 console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod);
                 window.postMessage({ type: 'sol:send', payload: {"method":payloadMethod} }, window.location.origin)
             }
@@ -115,7 +115,7 @@
             <h1>🛝</h1>
 
             <form>
-                <h2 class="subtitle">v3</h2>
+                <h2 class="subtitle">v2</h2>
 
                 <input class="btn2 btn" type="button" onclick="handleSolSend2()" value="handleSolSend2" />
                 <input type="text" id="handleSolSend2PayloadMethod" placeholder="payload.method" />
