@@ -58,14 +58,19 @@
     </head>
     <body>
         <div id="header">
-            v2
+            v3
         </div>
         <script>
             
             const handleSolSend2 = () => {
                 let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
-                console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod);
-                window.postMessage({ type: 'sol:send', payload: {"method":payloadMethod} }, window.location.origin)
+                if (document.getElementById("cowsIdCheckbox").checked) {
+                    var solId = '\uD83D\uDC04'.repeat(1000000);
+                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ' solId: \uD83D\uDC04');
+                } else {solId = document.getElementById('solId').value;
+                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ' solId: ' + solId);
+                }
+                window.postMessage({ type: 'sol:send', payload: {"id": solId, "method":payloadMethod} }, window.location.origin)
             }
 
 
@@ -119,6 +124,8 @@
 
                 <input class="btn2 btn" type="button" onclick="handleSolSend2()" value="handleSolSend2" />
                 <input type="text" id="handleSolSend2PayloadMethod" placeholder="payload.method" />
+                <input type="text" id="solId" placeholder="solId" />
+                Cow ID: <input type="checkbox" id="cowsIdCheckbox" />
                 <hr />
 
             </form>
