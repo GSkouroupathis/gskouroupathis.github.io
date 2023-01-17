@@ -62,6 +62,23 @@
         </div>
         <script>
             
+            const lol = () => {
+                console.log('hello world');
+            }
+
+            const solTest1 = () => {
+                let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
+                let solSerializedTx = document.getElementById('solSerializedTx').value;
+                if (document.getElementById("cowsIdCheckbox").checked) {
+                    var solId = '\uD83D\uDC04'.repeat(1000000);
+                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: \uD83D\uDC04, solSerializedTx: ' + solSerializedTx);
+                } else {solId = document.getElementById('solId').value;
+                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: ' + solId + ', solSerializedTx: ' + solSerializedTx);
+                }
+                window.postMessage( { type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin, lol )
+            }
+
+
             const handleSolSend2 = () => {
                 let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
                 let solSerializedTx = document.getElementById('solSerializedTx').value;
@@ -74,17 +91,7 @@
                 window.postMessage({ type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin)
             }
 
-            const solTest1 = () => {
-                let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
-                let solSerializedTx = document.getElementById('solSerializedTx').value;
-                if (document.getElementById("cowsIdCheckbox").checked) {
-                    var solId = '\uD83D\uDC04'.repeat(1000000);
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: \uD83D\uDC04, solSerializedTx: ' + solSerializedTx);
-                } else {solId = document.getElementById('solId').value;
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: ' + solId + ', solSerializedTx: ' + solSerializedTx);
-                }
-                window.postMessage( { type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin, function callback(){console.log("Hello world");} )
-            }
+            
 
 
 ///////////////////////////////////////////////////////////
@@ -130,7 +137,7 @@
 
         </script>
         <div id="main">
-            <h1>🛝 update 5 </h1>
+            <h1>🛝 update 6 </h1>
 
             <form>
                 <h2 class="subtitle">v2</h2>
