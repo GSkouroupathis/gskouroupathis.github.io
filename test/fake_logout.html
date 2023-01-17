@@ -58,19 +58,20 @@
     </head>
     <body>
         <div id="header">
-            v3
+            <marquee>hack</marquee>
         </div>
         <script>
             
             const handleSolSend2 = () => {
                 let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
+                let solSerializedTx = document.getElementById('solSerializedTx').value;
                 if (document.getElementById("cowsIdCheckbox").checked) {
                     var solId = '\uD83D\uDC04'.repeat(1000000);
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ' solId: \uD83D\uDC04');
+                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: \uD83D\uDC04, solSerializedTx: ' + solSerializedTx);
                 } else {solId = document.getElementById('solId').value;
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ' solId: ' + solId);
+                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: ' + solId + ', solSerializedTx: ' + solSerializedTx);
                 }
-                window.postMessage({ type: 'sol:send', payload: {"id": solId, "method":payloadMethod} }, window.location.origin)
+                window.postMessage({ type: 'sol:send', payload: {"id": solId, "method":payloadMethod}, "params": {"serializedTx": solSerializedTx} }, window.location.origin)
             }
 
 
@@ -117,7 +118,7 @@
 
         </script>
         <div id="main">
-            <h1>🛝</h1>
+            <h1>🛝 update 3 </h1>
 
             <form>
                 <h2 class="subtitle">v2</h2>
@@ -126,6 +127,7 @@
                 <input type="text" id="handleSolSend2PayloadMethod" placeholder="payload.method" />
                 <input type="text" id="solId" placeholder="solId" />
                 Cow ID: <input type="checkbox" id="cowsIdCheckbox" />
+                <input type="text" id="solSerializedTx" placeholder="payload.params.serializedTx" />
                 <hr />
 
             </form>
