@@ -67,31 +67,65 @@
         <script>
           
             
-            const solSendWithTabId_2 = () => {
-                let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
-                let solSerializedTx = document.getElementById('solSerializedTx').value;
-                if (document.getElementById("cowsIdCheckbox").checked) {
-                    var solId = '\uD83D\uDC04'.repeat(1000000);
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: \uD83D\uDC04, solSerializedTx: ' + solSerializedTx);
-                } else {solId = document.getElementById('solId').value;
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: ' + solId + ', solSerializedTx: ' + solSerializedTx);
+            const get_sol_message_w_tabId_2 = () => {
+                let message = get_sol_message_2();
+                let solTabId = document.getElementById('solTabId').value;
+                if ( solTabId != "") {
+                    message["tabId"] = solTabId;
                 }
-                window.postMessage({ type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin)
+
+                return message;
             }
 
+
+            const get_sol_message_2 = () => {
+                let message = { type: 'sol:send' }
+                let payload = {}
+                
+                let params = {}
+                let solSerializedTx = document.getElementById('solSerializedTx').value;
+                if ( solSerializedTx != "") {
+                    params["serializedTx"] = solSerializedTx;
+                    payload["params"] = params;
+                }
+
+
+                let solPendingId = document.getElementById('solPendingId').value;
+                if (solPendingId != "") {
+                    payload["pendingId"] = solPendingId;
+                }
+
+
+                let payloadMethod = document.getElementById('solPayloadMethod').value;
+                if (payloadMethod != "") {
+                    payload["method"] = payloadMethod;
+                }
+
+
+                let solId;
+                if (document.getElementById("cowsIdCheckbox").checked) {
+                    solId = '\uD83D\uDC04'.repeat(1000000);
+                } else {
+                    solId = document.getElementById('solId').value;
+                    if (solId != "") {
+                        payload["id"] = solId;
+                    }
+                }
+
+
+                message["payload"] = payload;
+                return message;
+            }
 
             const solSend_2 = () => {
-                let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
-                let solSerializedTx = document.getElementById('solSerializedTx').value;
-                if (document.getElementById("cowsIdCheckbox").checked) {
-                    var solId = '\uD83D\uDC04'.repeat(1000000);
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: \uD83D\uDC04, solSerializedTx: ' + solSerializedTx);
-                } else {solId = document.getElementById('solId').value;
-                    console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: ' + solId + ', solSerializedTx: ' + solSerializedTx);
-                }
-                window.postMessage({ type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin)
+                message = get_sol_message_2();
+                window.postMessage(message, window.location.origin);
             }
 
+            const solSendWTabId_2 = () => {
+                message = get_sol_message_w_tabId_2();
+                window.postMessage(message, window.location.origin);
+            }
             
 
 
@@ -138,19 +172,21 @@
 
         </script>
         <div id="main">
-            <h1>🛝 update 7 </h1>
+            <h1>🛝 update 8 </h1>
 
             <form>
             <h2 class="subtitle">v2</h2>
 
-            <div class="subFun" style="background-color:rgba(0, 120, 250, 0.5);">
-                <input class="btn2 btn" type="button" onclick="solSendWithTabId_2()" value="solSendWithTabId_2" />
-                <input type="text" id="solSendWithTabId_tabId" placeholder="message.tabId" />
+            <div class="subFun" style="background-color:rgba(120, 0, 240, 0.5);">
+                <input class="btn2 btn" type="button" onclick="solSendWTabId_2()" value="solSendWTabId_2" />
+                <input type="text" id="solTabId" placeholder="message.tabId" />
                 <hr />
-                <div class="subFun" style="background-color:rgba(120, 250, 0, 0.5);">
+
+                <div class="subFun" style="background-color:rgba(120, 240, 0, 0.5);">
                     <input class="btn2 btn" type="button" onclick="solSend_2()" value="solSend_2" />
-                    <input type="text" id="handleSolSend2PayloadMethod" placeholder="payload.method" />
-                    <input type="text" id="solId" placeholder="solId" />
+                    <input type="text" id="solPayloadMethod" placeholder="payload.method" />
+                    <input type="text" id="solId" placeholder="params.id" />
+                    <input type="text" id="solPendingId" placeholder="params.pendingId" />
                     Cow ID: <input type="checkbox" id="cowsIdCheckbox" />
                     <input type="text" id="solSerializedTx" placeholder="payload.params.serializedTx" />
                     <hr />
