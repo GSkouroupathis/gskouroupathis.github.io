@@ -54,6 +54,10 @@
                 background:black;
                 text-shadow: 2px 1px #1f0e0f;
             }
+
+            .subFun {
+                padding: 4px 0;
+            }
         </style>
     </head>
     <body>
@@ -61,12 +65,9 @@
             <marquee>hack</marquee>
         </div>
         <script>
+          
             
-            const lol = () => {
-                console.log('hello world');
-            }
-
-            const solTest1 = () => {
+            const solSendWithTabId_2 = () => {
                 let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
                 let solSerializedTx = document.getElementById('solSerializedTx').value;
                 if (document.getElementById("cowsIdCheckbox").checked) {
@@ -75,11 +76,11 @@
                 } else {solId = document.getElementById('solId').value;
                     console.log('[***] handleSolSend2 - payload.method: ' + payloadMethod + ', solId: ' + solId + ', solSerializedTx: ' + solSerializedTx);
                 }
-                window.postMessage( { type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin, lol )
+                window.postMessage({ type: 'sol:send', payload: { "id": solId, "method":payloadMethod, "params": {"serializedTx": solSerializedTx} } }, window.location.origin)
             }
 
 
-            const handleSolSend2 = () => {
+            const solSend_2 = () => {
                 let payloadMethod = document.getElementById('handleSolSend2PayloadMethod').value;
                 let solSerializedTx = document.getElementById('solSerializedTx').value;
                 if (document.getElementById("cowsIdCheckbox").checked) {
@@ -137,19 +138,24 @@
 
         </script>
         <div id="main">
-            <h1>🛝 update 6 </h1>
+            <h1>🛝 update 7 </h1>
 
             <form>
-                <h2 class="subtitle">v2</h2>
+            <h2 class="subtitle">v2</h2>
 
-                <input class="btn2 btn" type="button" onclick="solTest1()" value="solTest1" />
-                <input class="btn2 btn" type="button" onclick="handleSolSend2()" value="handleSolSend2" />
-                <input type="text" id="handleSolSend2PayloadMethod" placeholder="payload.method" />
-                <input type="text" id="solId" placeholder="solId" />
-                Cow ID: <input type="checkbox" id="cowsIdCheckbox" />
-                <input type="text" id="solSerializedTx" placeholder="payload.params.serializedTx" />
+            <div class="subFun" style="background-color:rgba(0, 120, 250, 0.5);">
+                <input class="btn2 btn" type="button" onclick="solSendWithTabId_2()" value="solSendWithTabId_2" />
+                <input type="text" id="solSendWithTabId_tabId" placeholder="message.tabId" />
                 <hr />
-
+                <div class="subFun" style="background-color:rgba(120, 250, 0, 0.5);">
+                    <input class="btn2 btn" type="button" onclick="solSend_2()" value="solSend_2" />
+                    <input type="text" id="handleSolSend2PayloadMethod" placeholder="payload.method" />
+                    <input type="text" id="solId" placeholder="solId" />
+                    Cow ID: <input type="checkbox" id="cowsIdCheckbox" />
+                    <input type="text" id="solSerializedTx" placeholder="payload.params.serializedTx" />
+                    <hr />
+                </div>
+            </div>
             </form>
 
 
