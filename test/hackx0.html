@@ -35,6 +35,23 @@
                 myEventDispatcher.doSomething();
             }
 
+
+
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////// SOLANA ////////////////////////////////////////////////////            
+///////////////////////////////////////////////////////////////////////////////////
+            async function solana_connect() {
+                console.log("[*] CONNECT")
+                try {
+                    const resp = await window.exodus.solana.connect()
+                    console.log('[*] ' + resp.publicKey.toString())
+                } catch (err) {
+                    console.log('{ code: 4001, message: User rejected the request. }')
+                }
+            }
+            
+            
+
 ///////////////////////////////////////////////////////////////////////////////////
 /////////////////////// ALGO //////////////////////////////////////////////////////            
 ///////////////////////////////////////////////////////////////////////////////////
@@ -568,10 +585,19 @@
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #DAA">
         <h1 style="color:#5FE;text-shadow: 2px 2px 4px #236;">
-        90
+        91
         </h1>
         <h2>x0-w</h2>
         
+
+
+        <hr />
+        <h3>SOLANA</h3>
+        <hr />
+        <input type="button" value="algo_connect" onclick="algo_connect()" />
+
+
+
         <hr />
         <h3>ALGO</h3>
         <hr />
@@ -583,10 +609,12 @@
         <input type="button" value="algo_double_transaction" onclick="algo_double_transaction()" />
         <input type="button" value="asset_transaction" onclick="asset_transaction()" />
         <input type="button" value="asset_transaction_closeRemainderTo" onclick="asset_transaction_closeRemainderTo()" />
+
+
+
         <hr />
         <h3>ETH</h3>
         <hr />
-        
         <input type="button" value="request_eth_accounts" onclick="request_eth_accounts()" />
         <input type="button" value="eth_sendTransaction" onclick="eth_sendTransaction()" />
         <input type="button" value="eth_sendTransaction_withData" onclick="eth_sendTransaction_withData()" />
