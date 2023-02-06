@@ -3,6 +3,7 @@
         <title>x0-w</title>
         <link rel="shortcut icon" type="image/xss+svg" href="xss.svg"/>
         <!--<script src="chrome-extension://llekelocgcbelmdpkdjigdgnckkobioc/algorand-provider.js">ay no</script>-->
+        <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/algosdk@v1.24.1/dist/browser/algosdk.min.js" integrity="sha384-cXCnQHmkjqS84S5jqAp6YXjU1ynCEJaHROHklSY7eh+cCXQ3aGX0oSgJSfQgDF5y" crossorigin="anonymous"></script>
     </head>
     <body style="background: rgb(207,31,147); background: radial-gradient(circle, rgba(10,90,200,1) 0%, rgba(250,150,250,1) 35%, rgba(50,250,100,1) 100%);">
@@ -49,8 +50,39 @@
                     console.log('{ code: 4001, message: User rejected the request. }')
                 }
             }
+
+
+            async function solana_eager_connect() {
+                console.log("[*] EAGER CONNECT")
+                try {
+                    const resp = await window.exodus.solana.connect({ onlyIfTrusted: true })
+                    console.log('[*] ' + resp.publicKey.toString())
+                } catch (err) {
+                    console.log('{ code: 4001, message: User rejected the request. }')
+                }
+            }
             
             
+            async function solana_signAndSendTransaction() {
+                const endpoint = 'https://api.mainnet-beta.solana.com'
+                const connection = new Connection(endpoint)
+
+                const instructions: TransactionInstruction[] = [
+                    SystemProgram.transfer({
+                        fromPubkey: SIGNER_WALLET.publicKey,
+                        toPubkey: DESTINATION_WALLET.publicKey,
+                        lamports: 0.01 * LAMPORTS_PER_SOL,
+                    }),
+                ];
+                const transaction = new VersionedTransaction(/* ... */)
+
+                const { signature } = await window.exodus.solana.signAndSendTransaction(
+                transaction,
+                )
+
+                await connection.confirmTransaction(signature)
+            }
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 /////////////////////// ALGO //////////////////////////////////////////////////////            
@@ -583,9 +615,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #DAA">
-        <h1 style="color:#5FE;text-shadow: 2px 2px 4px #236;">
-        91
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #4FA">
+        <h1 style="color:#5F6E;text-shadow: 2px 2px 4px #236;">
+        92
         </h1>
         <h2>x0-w</h2>
         
@@ -594,7 +626,9 @@
         <hr />
         <h3>SOLANA</h3>
         <hr />
-        <input type="button" value="algo_connect" onclick="algo_connect()" />
+        <input type="button" value="solana_connect" onclick="solana_connect()" />
+        <input type="button" value="solana_eager_connect" onclick="solana_eager_connect()" />
+        <input type="button" value="solana_signAndSendTransaction" onclick="solana_signAndSendTransaction()" />
 
 
 
