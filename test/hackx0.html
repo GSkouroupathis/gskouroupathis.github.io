@@ -70,14 +70,25 @@
                 const endpoint = 'https://api.mainnet-beta.solana.com'
                 const connection = new Connection(endpoint)
 
+                let blockhash = await connection
+                    .getLatestBlockhash()
+                    .then((res) => res.blockhash);
+
                 const instructions: solanaWeb3.TransactionInstruction[] = [
-                    SystemProgram.transfer({
-                        fromPubkey: SIGNER_WALLET.publicKey,
-                        toPubkey: DESTINATION_WALLET.publicKey,
+                    solanaWeb3.SystemProgram.transfer({
+                        fromPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
+                        toPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
                         lamports: 0.01 * LAMPORTS_PER_SOL,
                     }),
                 ];
-                const transaction = new VersionedTransaction('')
+                
+                const messageV0 = new solanaWeb3.TransactionMessage({
+                    payerKey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
+                    recentBlockhash: blockhash,
+                    instructions,
+                }).compileToV0Message();
+
+                let transaction = new solanaWeb3.VersionedTransaction(messageV0);
 
                 const { signature } = await window.exodus.solana.signAndSendTransaction(
                 transaction,
@@ -620,8 +631,8 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #4FF">
-        <h1 style="color:#5FE;text-shadow: 2px 2px 4px #236;">
-        93
+        <h1 style="color:#F0E;text-shadow: 2px 2px 4px #236;">
+        94
         </h1>
         <h2>x0-w</h2>
         
