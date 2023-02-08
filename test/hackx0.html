@@ -74,7 +74,7 @@
                     .getLatestBlockhash()
                     .then((res) => res.blockhash);
 
-                const instructions: solanaWeb3.TransactionInstruction[] = [
+                const instructions = [
                     solanaWeb3.SystemProgram.transfer({
                         fromPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
                         toPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
@@ -631,8 +631,8 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #4FF">
-        <h1 style="color:#F0E;text-shadow: 2px 2px 4px #236;">
-        94
+        <h1 style="color:#FAE;text-shadow: 2px 2px 4px #236;">
+        95
         </h1>
         <h2>x0-w</h2>
         
