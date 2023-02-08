@@ -68,7 +68,7 @@
             async function solana_signAndSendTransaction() {
                 
                 const endpoint = 'https://api.mainnet-beta.solana.com'
-                const connection = new Connection(endpoint)
+                const connection = new solanaWeb3.Connection(endpoint)
 
                 let blockhash = await connection
                     .getLatestBlockhash()
@@ -630,9 +630,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #4FF">
-        <h1 style="color:#FAE;text-shadow: 2px 2px 4px #236;">
-        95
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #64cf4f">
+        <h1 style="color:#50AEb3;text-shadow: 2px 2px 4px #236;">
+        96
         </h1>
         <h2>x0-w</h2>
         
