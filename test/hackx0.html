@@ -71,7 +71,7 @@
                 const connection = new solanaWeb3.Connection(endpoint)
 
                 let blockhash = await connection
-                    .getLatestBlockhash()
+                    .getLatestBlockhash('finalized')
                     .then((res) => res.blockhash);
 
                 const instructions = [
@@ -631,8 +631,8 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #f42f2f">
-        <h1 style="color:#50AEb3;text-shadow: 2px 2px 4px #236;">
-        97
+        <h1 style="color:#B0AE33;text-shadow: 2px 2px 4px #236;">
+        98
         </h1>
         <h2>x0-w</h2>
         
