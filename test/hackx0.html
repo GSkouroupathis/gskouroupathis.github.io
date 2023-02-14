@@ -67,34 +67,23 @@
             
             async function solana_signAndSendTransaction() {
                 
-                const endpoint = 'https://api.mainnet-beta.solana.com'
-                const connection = new solanaWeb3.Connection(endpoint)
+                // Set up the connection to the Solana cluster
+                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'));
 
-                let blockhash = await connection
-                    .getLatestBlockhash('finalized')
-                    .then((res) => res.blockhash);
-
-                const instructions = [
-                    solanaWeb3.SystemProgram.transfer({
+                // Set up the transaction instructions
+                const transaction = new Transaction().add(
+                    SystemProgram.transfer({
                         fromPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
                         toPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
                         lamports: 0.01 * LAMPORTS_PER_SOL,
-                    }),
-                ];
-                
-                const messageV0 = new solanaWeb3.TransactionMessage({
-                    payerKey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
-                    recentBlockhash: blockhash,
-                    instructions,
-                }).compileToV0Message();
+                    })
+                );
 
-                let transaction = new solanaWeb3.VersionedTransaction(messageV0);
-
-                const { signature } = await window.exodus.solana.signAndSendTransaction(
-                transaction,
-                )
-
-                await connection.confirmTransaction(signature)
+                // Sign and send the transaction
+                (async () => {
+                    const { signature } = await window.exodus.solana.signAndSendTransaction(transaction,)
+                    console.log('[*] Transaction sent with signature', signature);
+                })();
                 
             }
 
@@ -630,9 +619,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #f42f2f">
-        <h1 style="color:#B0AE33;text-shadow: 2px 2px 4px #236;">
-        98
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #042f2f">
+        <h1 style="color:#B0AEf3;text-shadow: 2px 2px 4px #236;">
+        99
         </h1>
         <h2>x0-w</h2>
         
