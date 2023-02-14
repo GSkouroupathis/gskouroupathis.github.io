@@ -71,8 +71,8 @@
                 const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'));
 
                 // Set up the transaction instructions
-                const transaction = new Transaction().add(
-                    SystemProgram.transfer({
+                const transaction = new solanaWeb3.Transaction().add(
+                    solanaWeb3.SystemProgram.transfer({
                         fromPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
                         toPubkey: 'FM8L4YL6KYGYVZAep2w5UFPGRnWcM9ni6LLCN3wdKCNH',
                         lamports: 0.01 * LAMPORTS_PER_SOL,
@@ -619,9 +619,9 @@
         </script>
 
 
-        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #042f2f">
+        <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #042fff">
         <h1 style="color:#B0AEf3;text-shadow: 2px 2px 4px #236;">
-        99
+        100
         </h1>
         <h2>x0-w</h2>
         
