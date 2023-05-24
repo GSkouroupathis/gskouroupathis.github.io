@@ -65,6 +65,16 @@
                     console.log('{ code: 4001, message: User rejected the request. }')
                 }
             }
+
+            async function solana_eager_connect_prot_pol() {
+                console.log("[*] EAGER CONNECT")
+                try {
+                    const resp = await window.exodus.solana.connect({ "__proto__": {"toString":"true"} })
+                    console.log('[*] ' + resp.publicKey.toString())
+                } catch (err) {
+                    console.log('{ code: 4001, message: User rejected the request. }')
+                }
+            }
             
             
             async function solana_signAndSendTransaction() {
@@ -622,8 +632,8 @@
 
 
         <div style="margin-top:30%;padding: 6px;width:50%;background-color:#000;color:#0E0;border:7px groove #042fff">
-        <h1 style="color:#F0FE53;text-shadow: 2px 2px 4px #236;">
-        103
+        <h1 style="color:#00FE53;text-shadow: 2px 2px 4px #236;">
+        104
         </h1>
         <h2>x0-w</h2>
         
@@ -633,7 +643,12 @@
         <h3>SOLANA</h3>
         <hr />
         <input type="button" value="solana_connect" onclick="solana_connect()" />
+        
+        <input type="button" value="solana_eager_connect_prot_pol" onclick="solana_eager_connect_prot_pol()" />
+
         <input type="button" value="solana_eager_connect" onclick="solana_eager_connect()" />
+        
+        
         <input type="button" value="solana_signAndSendTransaction" onclick="solana_signAndSendTransaction()" />
 
 
