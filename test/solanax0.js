@@ -97,7 +97,7 @@
             */
 
             async function solana_sign_message() {
-                const message = '<script>alert(2)</script>'
+                const message = '\u{25411}'
                 const encodedMessage = new TextEncoder().encode(message)
                 try {
                     const { signature } = await window.exodus.solana.signMessage(
