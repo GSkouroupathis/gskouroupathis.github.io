@@ -99,9 +99,15 @@
             async function solana_sign_message() {
                 const message = '<script>alert(2)</script>'
                 const encodedMessage = new TextEncoder().encode(message)
-                const { signature } = await window.exodus.solana.signMessage(
-                encodedMessage,
-                'utf8',
-                )
+                try {
+                    const { signature } = await window.exodus.solana.signMessage(
+                        encodedMessage,
+                        'utf8',
+                        )
+                    console.log('[*] ' + signature.toString())
+                } catch (err) {
+                    console.log('ERROR SIGNING MESSAGE')
+                }
+                
             }
 
