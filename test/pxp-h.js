@@ -48,7 +48,7 @@ const options = {
 }
 
 function getEngagePlugin() {
-    getEngagePlugin2.then(function(result) {
+    getEngagePlugin2().then(function(result) {
         const pluginElement = document.querySelector(".pexip-engage-plugin");
         return window.PexipEngage.Plugin(document.querySelector('#engageme', options));
     });
