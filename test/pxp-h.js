@@ -47,15 +47,8 @@ const options = {
     }
 }
 
-function getEngagePlugin() {
-    getEngagePlugin2().then(function(result) {
-        const pluginElement = document.querySelector(".pexip-engage-plugin");
-        return window.PexipEngage.Plugin(document.querySelector('#engageme', options));
-    });
-}
-
 // Since the global is installed async, when our code runs, it might not be available yet.
-function getEngagePlugin2() {
+function getEngagePlugin() {
     return new Promise((resolve) => {
       if (window.PexipEngage?.Plugin) resolve(window.PexipEngage?.Plugin);
   
