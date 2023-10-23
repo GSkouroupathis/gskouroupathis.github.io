@@ -1,4 +1,4 @@
-const options = {
+/*const options = {
     "config": {
     "flow": "SMOTQC",
     "language": "en-GB",
@@ -46,6 +46,7 @@ const options = {
     "search_countries": "BE,NL,FR"
     }
 }
+*/
 
 // Since the global is installed async, when our code runs, it might not be available yet.
 function getEngagePlugin() {
@@ -62,12 +63,13 @@ function getEngagePlugin() {
     });
   }
   
-// use the `awaitFirstInstance` API to get a Promise with the first available instance.
-function getPluginInstance() {
-  return getEngagePlugin().then((plugin) => plugin.awaitFirstInstance());
-}
+  // use the `awaitFirstInstance` API to get a Promise with the first available instance.
+  function getPluginInstance() {
+    return getEngagePlugin().then((plugin) => plugin.awaitFirstInstance());
+  }
   
-getPluginInstance().then((instance) => {
-   // interact with the PexipEngagePlugin here.
-   console.log('[*] All good')
-});
+  getPluginInstance().then((instance) => {
+    // interact with the PexipEngagePlugin here.
+    console.log('[*] All good')
+  });
+
