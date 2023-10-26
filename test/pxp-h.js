@@ -52,12 +52,14 @@ const options = {
 function getEngagePlugin() {
     return new Promise((resolve) => {
       if (window.PexipEngage?.Plugin) {
+        console.log("[*] getEngagePlugin")
         window.PexipEngage.Plugin(document.querySelector('#my-plugin'), options)
         resolve(window.PexipEngage?.Plugin);
       }
   
       // if not available, listen for any event, global will be available then.
       function listener() {
+        console.log("[*] Listener")
         window.PexipEngage.Plugin(document.querySelector('#my-plugin'), options)
         resolve(window.PexipEngage?.Plugin);
         document.removeEventListener("SkedifyPluginEvent", listener);
