@@ -1,4 +1,4 @@
-/*const options = {
+const options = {
     "config": {
     "flow": "SMOTQC",
     "language": "en-GB",
@@ -46,12 +46,15 @@
     "search_countries": "BE,NL,FR"
     }
 }
-*/
+
 
 // Since the global is installed async, when our code runs, it might not be available yet.
 function getEngagePlugin() {
     return new Promise((resolve) => {
-      if (window.PexipEngage?.Plugin) resolve(window.PexipEngage?.Plugin);
+      if (window.PexipEngage?.Plugin) {
+        window.PexipEngage.Plugin(document.querySelector('#my-plugin'), options)
+        resolve(window.PexipEngage?.Plugin);
+      }
   
       // if not available, listen for any event, global will be available then.
       function listener() {
