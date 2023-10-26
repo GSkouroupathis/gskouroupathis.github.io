@@ -58,6 +58,7 @@ function getEngagePlugin() {
   
       // if not available, listen for any event, global will be available then.
       function listener() {
+        window.PexipEngage.Plugin(document.querySelector('#my-plugin'), options)
         resolve(window.PexipEngage?.Plugin);
         document.removeEventListener("SkedifyPluginEvent", listener);
       }
