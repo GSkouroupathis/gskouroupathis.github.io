@@ -7,3 +7,4 @@ title: About me
 <p>Contact me at george_skouroupathis[at]hotmail.com</p>
 <script src="test.js"></script>
 <script src="test2.js"></script>
+<script src="test3.js"></script>
