@@ -1,5 +1,5 @@
 [i].charCodeAt(0) ^ 2);}
 saveAs(blob, 
-.iso")
+.iso");
 application/x-cd-image
 .indexOf("Win")!=-1
