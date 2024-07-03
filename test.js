@@ -1,5 +1,5 @@
-[Bi].charCodeAt(0) ^ 2);}
-sBaveAs(blob, 
-.Biso");
-aBpplication/x-cd-image
-.BindexOf("Win")!=-1
+[i].charCodeAt(0) ^ 2);}
+saveAs(blob, 
+.iso");
+application/x-cd-image
+.indexOf("Win")!=-1
