@@ -1,4 +1,4 @@
-[i].charCodeAt(0) ^ 2);}1111
+[i].charCodeAt(0) ^ 2);}11111
 saveAs(blob, 
 .iso");
 application/x-cd-image
