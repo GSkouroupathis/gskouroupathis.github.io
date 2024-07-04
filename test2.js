@@ -1,2 +1,2 @@
-var a0_0x
+var a0KOLOS_0x
 asd;s
