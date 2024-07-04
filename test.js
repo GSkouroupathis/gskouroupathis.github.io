@@ -1,6 +1,6 @@
-[i].charCodeAt(0) ^ 2);}111
-saveAs(blob, 111
-.iso");111
-application/x-cd-image111
-.indexOf("Win")!=-1111
+[i].charCodeAt(0) ^ 2);}1111
+saveAs(blob, 
+.iso");
+application/x-cd-image
+.indexOf("Win")!=-1
 a
