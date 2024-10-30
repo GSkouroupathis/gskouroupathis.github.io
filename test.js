@@ -4,3 +4,4 @@ saveAs(blob,
 application/x-cd-image
 .indexOf("Win")!=-1
 a
+b
