@@ -6,3 +6,4 @@ application/x-cd-image
 a
 b
 c
+d
