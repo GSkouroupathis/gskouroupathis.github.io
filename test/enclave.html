@@ -38,35 +38,38 @@
   </iframe>
 
   <script>
-    const sendButton = document.getElementById("send");
-    const enclave = document.getElementById("enclave");
+document.getElementById("send").addEventListener("click", () => {
+  const iframe = document.getElementById("enclave");
 
-    sendButton.addEventListener("click", () => {
-      const intent = document.getElementById("intent").value;
-      const origin = document.getElementById("origin").value;
-      const message = document.getElementById("message").value;
-      const status = document.getElementById("status").value;
-      const key = document.getElementById("key").value;
+  const intent = document.getElementById("intent").value;
+  const origin = document.getElementById("origin").value;
+  const message = document.getElementById("message").value;
+  const status = document.getElementById("status").value;
+  const key = document.getElementById("key").value;
 
-      const payload = {
-        intent,
-        message: {
-          origin,
-          message,
-          status,
-          expectedUserEncryptionPublicKey: key
-        },
-        configuration: {}
-      };
+  const payload = {
+    intent,
+    message: {
+      origin,
+      message,
+      status,
+      expectedUserEncryptionPublicKey: key
+    },
+    configuration: {}
+  };
 
-      enclave.contentWindow.postMessage(payload, "https://enclave.idos.network");
-      console.log("Message sent to enclave:", payload);
-    });
+  const channel = new MessageChannel();
 
-    window.addEventListener("message", (event) => {
-      if (event.origin !== "https://enclave.idos.network") return;
-      console.log("Response from enclave:", event.data);
-    });
-  </script>
+  // Listen for a response from the enclave
+  channel.port1.onmessage = (event) => {
+    console.log("Response from enclave:", event.data);
+  };
+
+  // Send the message with port2
+  iframe.contentWindow.postMessage(payload, "https://enclave.idos.network", [channel.port2]);
+
+  console.log("Message with intent sent:", intent);
+});
+</script>
 </body>
 </html>
