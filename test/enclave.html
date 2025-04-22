@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enclave Messaging Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, textarea { width: 100%; padding: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Send Message to Enclave</h1>
+
+  <label>Intent:</label>
+  <input type="text" id="intent" value="fetch-key" />
+
+  <label>Origin:</label>
+  <input type="text" id="origin" value="https://your-domain.com" />
+
+  <label>Message:</label>
+  <textarea id="message">Hello from parent!</textarea>
+
+  <label>Status:</label>
+  <input type="text" id="status" value="requesting" />
+
+  <label>Encryption Public Key:</label>
+  <input type="text" id="key" value="test-key-base64==" />
+
+  <button id="send">Send Message</button>
+
+  <iframe
+    id="enclave"
+    src="https://enclave.idos.network/"
+    sandbox="allow-scripts allow-same-origin"
+    allow="publickey-credentials-get; storage-access"
+    style="width: 100%; height: 200px; border: 1px solid #ccc; margin-top: 20px;">
+  </iframe>
+
+  <script>
+    const sendButton = document.getElementById("send");
+    const enclave = document.getElementById("enclave");
+
+    sendButton.addEventListener("click", () => {
+      const intent = document.getElementById("intent").value;
+      const origin = document.getElementById("origin").value;
+      const message = document.getElementById("message").value;
+      const status = document.getElementById("status").value;
+      const key = document.getElementById("key").value;
+
+      const payload = {
+        intent,
+        message: {
+          origin,
+          message,
+          status,
+          expectedUserEncryptionPublicKey: key
+        },
+        configuration: {}
+      };
+
+      enclave.contentWindow.postMessage(payload, "https://enclave.idos.network");
+      console.log("Message sent to enclave:", payload);
+    });
+
+    window.addEventListener("message", (event) => {
+      if (event.origin !== "https://enclave.idos.network") return;
+      console.log("Response from enclave:", event.data);
+    });
+  </script>
+</body>
+</html>
