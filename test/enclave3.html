@@ -117,11 +117,44 @@
         }
 
         async function testBackup() {
+            log('Starting backup process...');
+            const abortController = new AbortController();
+            
+            // Setup message listener first
+            window.addEventListener(
+                "message",
+                async (event) => {
+                    if (event.data.type !== "idOS:store" || 
+                        event.origin !== 'https://enclave.idos.network') return;
+
+                    let status = "";
+                    try {
+                        status = "success";
+                        log('Backup store event successful');
+                    } catch (error) {
+                        status = "failure";
+                        log('Backup store event failed');
+                    }
+
+                    // Send response through the message port
+                    event.ports[0].postMessage({
+                        result: {
+                            type: "idOS:store",
+                            status,
+                        }
+                    });
+                    event.ports[0].close();
+                    abortController.abort();
+                },
+                { signal: abortController.signal }
+            );
+
             try {
+                // Initiate the backup
                 await requestToEnclave({
                     backupPasswordOrSecret: {}
                 });
-                log('Backup initiated');
+                log('Backup request sent');
             } catch (error) {
                 log('Backup error: ' + error);
             }
