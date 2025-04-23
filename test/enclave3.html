@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>idOS Enclave POC</title>
+    <style>
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .enclave-container { margin: 20px 0; }
+        .enclave-container.visible { background: rgba(0,0,0,0.1); }
+        .controls { margin: 20px 0; }
+        .log { 
+            background: #f5f5f5; 
+            padding: 10px; 
+            border: 1px solid #ddd;
+            min-height: 200px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>idOS Enclave POC</h1>
+        
+        <div class="controls">
+            <button onclick="initEnclave()">1. Initialize Enclave</button>
+            <button onclick="testReady()">2. Test Ready</button>
+            <button onclick="testConfirm()">3. Test Confirm</button>
+            <button onclick="testBackup()">4. Test Backup</button>
+        </div>
+
+        <div id="enclave-container" class="enclave-container"></div>
+        
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        let enclaveFrame;
+        
+        function log(msg) {
+            const logEl = document.getElementById('log');
+            logEl.innerHTML += `${new Date().toISOString()}: ${msg}\n`;
+        }
+
+        function initEnclave() {
+            const container = document.getElementById('enclave-container');
+            
+            // Create iframe
+            enclaveFrame = document.createElement('iframe');
+            enclaveFrame.id = 'idos-enclave-iframe';
+            enclaveFrame.src = 'https://enclave.idos.network';
+            enclaveFrame.allow = 'publickey-credentials-get; storage-access';
+            enclaveFrame.sandbox = 'allow-scripts allow-same-origin allow-forms allow-modals allow-popups';
+            enclaveFrame.style.width = '100%';
+            enclaveFrame.style.height = '200px';
+            enclaveFrame.style.border = 'none';
+            
+            container.appendChild(enclaveFrame);
+
+            // Configure enclave
+            enclaveFrame.addEventListener('load', async () => {
+                try {
+                    await requestToEnclave({
+                        configure: {
+                            mode: "existing",
+                            theme: "light"
+                        }
+                    });
+                    log('Enclave initialized and configured');
+                } catch (error) {
+                    log('Error configuring enclave: ' + error);
+                }
+            });
+        }
+
+        async function requestToEnclave(request) {
+            return new Promise((resolve, reject) => {
+                const { port1, port2 } = new MessageChannel();
+
+                port1.onmessage = ({ data }) => {
+                    port1.close();
+                    data.error ? reject(data.error) : resolve(data.result);
+                    log('Response: ' + JSON.stringify(data));
+                };
+
+                enclaveFrame.contentWindow.postMessage(
+                    request, 
+                    'https://enclave.idos.network',
+                    [port2]
+                );
+                log('Request sent: ' + JSON.stringify(request));
+            });
+        }
+
+        async function testReady() {
+            try {
+                const result = await requestToEnclave({
+                    storage: {
+                        userId: "test-user-123"
+                    }
+                });
+                log('Ready test complete');
+            } catch (error) {
+                log('Ready test error: ' + error);
+            }
+        }
+
+        async function testConfirm() {
+            try {
+                const result = await requestToEnclave({
+                    confirm: {
+                        message: "This is a test confirmation"
+                    }
+                });
+                log('Confirm result: ' + result);
+            } catch (error) {
+                log('Confirm error: ' + error);
+            }
+        }
+
+        async function testBackup() {
+            try {
+                await requestToEnclave({
+                    backupPasswordOrSecret: {}
+                });
+                log('Backup initiated');
+            } catch (error) {
+                log('Backup error: ' + error);
+            }
+        }
+    </script>
+</body>
+</html>
