@@ -151,6 +151,7 @@
             };
 
             // Post message to iframe
+            console.log(payload);
             iframe.contentWindow.postMessage(payload, "https://enclave.idos.network", [port2]);
         }
 
