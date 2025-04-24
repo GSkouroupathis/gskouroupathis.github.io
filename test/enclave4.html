@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>4-5 idOS Enclave Message Tester</title>
+    <title>4-6 idOS Enclave Message Tester</title>
     <style>
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         .message-group { 
@@ -141,11 +141,10 @@
 
         function initEnclave() {
             const container = document.getElementById('enclave-container');
-            
-            // Clear container first
             container.innerHTML = '';
             
-            // Create iframe
+            log('🚀 Creating enclave iframe...');
+            
             enclaveFrame = document.createElement('iframe');
             enclaveFrame.id = 'idos-enclave-iframe';
             enclaveFrame.src = 'https://isle.idos.network';
@@ -153,27 +152,35 @@
             enclaveFrame.sandbox = 'allow-scripts allow-same-origin allow-forms allow-modals allow-popups';
             enclaveFrame.style.width = '100%';
             enclaveFrame.style.height = '200px';
-            enclaveFrame.style.border = 'none';
+            enclaveFrame.style.border = '1px solid #ddd';
             
             container.appendChild(enclaveFrame);
 
-            // Add loading indicator
-            log('Creating enclave iframe...');
-
-            // Configure enclave
-            enclaveFrame.addEventListener('load', async () => {
-                try {
-                    await requestToEnclave({
-                        configure: {
-                            mode: "existing",
-                            theme: "light"
-                        }
-                    });
-                    log('✅ Enclave initialized and configured');
-                } catch (error) {
-                    log('❌ Error configuring enclave: ' + error);
+            // Listen for enclave ready event
+            window.addEventListener('message', function readyListener(event) {
+                if (event.origin === 'https://isle.idos.network' && event.data === 'ready') {
+                    enclaveReady = true;
+                    log('✅ Enclave ready event received');
+                    window.removeEventListener('message', readyListener);
+                    
+                    // Configure after ready
+                    configureEnclave();
                 }
             });
+        }
+
+        async function configureEnclave() {
+            try {
+                await requestToEnclave({
+                    configure: {
+                        mode: "existing",
+                        theme: "light"
+                    }
+                });
+                log('✅ Enclave configured successfully');
+            } catch (error) {
+                log('❌ Configure error: ' + error);
+            }
         }
 
         async function testStorage() {
@@ -322,21 +329,43 @@
         }
 
         async function requestToEnclave(request) {
+            if (!enclaveFrame || !enclaveReady) {
+                log('❌ Error: Enclave not initialized or not ready');
+                throw new Error('Enclave not initialized or not ready');
+            }
+
             return new Promise((resolve, reject) => {
                 const { port1, port2 } = new MessageChannel();
+                const timeout = setTimeout(() => {
+                    port1.close();
+                    reject(new Error('Request timed out'));
+                    log('⏰ Request timed out');
+                }, 5000);
 
                 port1.onmessage = ({ data }) => {
+                    clearTimeout(timeout);
                     port1.close();
-                    data.error ? reject(data.error) : resolve(data.result);
-                    log('Response: ' + JSON.stringify(data));
+                    if (data.error) {
+                        log('❌ Error response: ' + JSON.stringify(data.error));
+                        reject(data.error);
+                    } else {
+                        log('✅ Success response: ' + JSON.stringify(data.result));
+                        resolve(data.result);
+                    }
                 };
 
-                enclaveFrame.contentWindow.postMessage(
-                    request, 
-                    'https://isle.idos.network',
-                    [port2]
-                );
-                log('Request sent: ' + JSON.stringify(request));
+                try {
+                    enclaveFrame.contentWindow.postMessage(
+                        request, 
+                        'https://isle.idos.network',
+                        [port2]
+                    );
+                    log('📤 Request sent: ' + JSON.stringify(request));
+                } catch (error) {
+                    clearTimeout(timeout);
+                    reject(error);
+                    log('❌ Send error: ' + error);
+                }
             });
         }
 
