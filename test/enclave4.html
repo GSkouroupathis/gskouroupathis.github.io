@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>idOS Enclave Message Tester</title>
+    <style>
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .message-group { 
+            margin: 20px 0; 
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .message-group h3 { margin-top: 0; }
+        .input-group { margin: 10px 0; }
+        .input-group label { display: block; margin-bottom: 5px; }
+        .input-group textarea { width: 100%; height: 80px; }
+        .input-group input { width: 100%; }
+        .log { 
+            background: #f5f5f5; 
+            padding: 10px; 
+            border: 1px solid #ddd;
+            min-height: 200px;
+            font-family: monospace;
+            margin-top: 20px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>idOS Enclave Message Tester</h1>
+        
+        <div class="message-group">
+            <button onclick="initEnclave()">1. Initialize Enclave</button>
+        </div>
+
+        <div class="message-group">
+            <h3>Storage</h3>
+            <div class="input-group">
+                <label>User ID:</label>
+                <input id="storage-userid" value="test-user-123">
+            </div>
+            <div class="input-group">
+                <label>Expected User Encryption Public Key:</label>
+                <input id="storage-pubkey" value="base64EncodedPublicKey">
+            </div>
+            <button onclick="testStorage()">Send Storage Request</button>
+        </div>
+
+        <div class="message-group">
+            <h3>Confirm</h3>
+            <div class="input-group">
+                <label>Message:</label>
+                <input id="confirm-message" value="Please confirm this action">
+            </div>
+            <button onclick="testConfirm()">Send Confirm Request</button>
+        </div>
+
+        <div class="message-group">
+            <h3>Configure</h3>
+            <div class="input-group">
+                <label>Mode:</label>
+                <select id="configure-mode">
+                    <option value="existing">existing</option>
+                    <option value="new">new</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Theme:</label>
+                <select id="configure-theme">
+                    <option value="light">light</option>
+                    <option value="dark">dark</option>
+                </select>
+            </div>
+            <button onclick="testConfigure()">Send Configure Request</button>
+        </div>
+
+        <div class="message-group">
+            <h3>Encryption</h3>
+            <div class="input-group">
+                <label>Message (base64):</label>
+                <input id="encrypt-message" value="SGVsbG8gV29ybGQ=">
+            </div>
+            <div class="input-group">
+                <label>Receiver Public Key (base64):</label>
+                <input id="encrypt-pubkey" value="base64EncodedPublicKey">
+            </div>
+            <button onclick="testEncrypt()">Send Encrypt Request</button>
+        </div>
+
+        <div class="message-group">
+            <h3>Decryption</h3>
+            <div class="input-group">
+                <label>Full Message (base64):</label>
+                <input id="decrypt-message" value="encryptedBase64Message">
+            </div>
+            <div class="input-group">
+                <label>Sender Public Key (base64):</label>
+                <input id="decrypt-pubkey" value="base64EncodedPublicKey">
+            </div>
+            <button onclick="testDecrypt()">Send Decrypt Request</button>
+        </div>
+
+        <div class="message-group">
+            <h3>Other Operations</h3>
+            <button onclick="testKeys()">Get Keys</button>
+            <button onclick="testReset()">Reset</button>
+            <button onclick="testBackup()">Backup</button>
+        </div>
+
+        <div class="message-group">
+            <h3>Filter Credentials</h3>
+            <div class="input-group">
+                <label>Credentials (JSON):</label>
+                <textarea id="filter-credentials">[{
+    "content": "base64EncodedContent",
+    "encryptor_public_key": "base64EncodedKey"
+}]</textarea>
+            </div>
+            <div class="input-group">
+                <label>Private Field Filters (JSON):</label>
+                <textarea id="filter-filters">{
+    "pick": {"field": ["value"]},
+    "omit": {}
+}</textarea>
+            </div>
+            <button onclick="testFilterCredentials()">Filter Credentials</button>
+        </div>
+
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        // ...existing log and initEnclave functions...
+
+        async function testStorage() {
+            try {
+                const result = await requestToEnclave({
+                    storage: {
+                        userId: document.getElementById('storage-userid').value,
+                        expectedUserEncryptionPublicKey: document.getElementById('storage-pubkey').value
+                    }
+                });
+                log('Storage result: ' + JSON.stringify(result));
+            } catch (error) {
+                log('Storage error: ' + error);
+            }
+        }
+
+        async function testConfirm() {
+            try {
+                const result = await requestToEnclave({
+                    confirm: {
+                        message: document.getElementById('confirm-message').value
+                    }
+                });
+                log('Confirm result: ' + result);
+            } catch (error) {
+                log('Confirm error: ' + error);
+            }
+        }
+
+        async function testConfigure() {
+            try {
+                await requestToEnclave({
+                    configure: {
+                        mode: document.getElementById('configure-mode').value,
+                        theme: document.getElementById('configure-theme').value
+                    }
+                });
+                log('Configure request sent');
+            } catch (error) {
+                log('Configure error: ' + error);
+            }
+        }
+
+        async function testEncrypt() {
+            try {
+                const result = await requestToEnclave({
+                    encrypt: {
+                        message: document.getElementById('encrypt-message').value,
+                        receiverPublicKey: document.getElementById('encrypt-pubkey').value
+                    }
+                });
+                log('Encrypt result: ' + JSON.stringify(result));
+            } catch (error) {
+                log('Encrypt error: ' + error);
+            }
+        }
+
+        async function testDecrypt() {
+            try {
+                const result = await requestToEnclave({
+                    decrypt: {
+                        fullMessage: document.getElementById('decrypt-message').value,
+                        senderPublicKey: document.getElementById('decrypt-pubkey').value
+                    }
+                });
+                log('Decrypt result: ' + JSON.stringify(result));
+            } catch (error) {
+                log('Decrypt error: ' + error);
+            }
+        }
+
+        async function testKeys() {
+            try {
+                const result = await requestToEnclave({ keys: {} });
+                log('Keys result: ' + JSON.stringify(result));
+            } catch (error) {
+                log('Keys error: ' + error);
+            }
+        }
+
+        async function testReset() {
+            try {
+                await requestToEnclave({ reset: {} });
+                log('Reset complete');
+            } catch (error) {
+                log('Reset error: ' + error);
+            }
+        }
+
+        async function testFilterCredentials() {
+            try {
+                const result = await requestToEnclave({
+                    filterCredentials: {
+                        credentials: JSON.parse(document.getElementById('filter-credentials').value),
+                        privateFieldFilters: JSON.parse(document.getElementById('filter-filters').value)
+                    }
+                });
+                log('Filter result: ' + JSON.stringify(result));
+            } catch (error) {
+                log('Filter error: ' + error);
+            }
+        }
+
+        async function testBackup() {
+            log('Starting backup process...');
+            const abortController = new AbortController();
+            
+            // Setup message listener first
+            window.addEventListener(
+                "message",
+                async (event) => {
+                    if (event.data.type !== "idOS:store" || 
+                        event.origin !== 'https://isle.idos.network') return;
+
+                    let status = "";
+                    try {
+                        status = "success";
+                        log('Backup store event successful');
+                    } catch (error) {
+                        status = "failure";
+                        log('Backup store event failed');
+                    }
+
+                    // Send response through the message port
+                    event.ports[0].postMessage({
+                        result: {
+                            type: "idOS:store",
+                            status,
+                        }
+                    });
+                    event.ports[0].close();
+                    abortController.abort();
+                },
+                { signal: abortController.signal }
+            );
+
+            try {
+                // Initiate the backup
+                await requestToEnclave({
+                    backupPasswordOrSecret: {}
+                });
+                log('Backup request sent');
+            } catch (error) {
+                log('Backup error: ' + error);
+            }
+        }
+        
+        async function requestToEnclave(request) {
+            return new Promise((resolve, reject) => {
+                const { port1, port2 } = new MessageChannel();
+
+                port1.onmessage = ({ data }) => {
+                    port1.close();
+                    data.error ? reject(data.error) : resolve(data.result);
+                    log('Response: ' + JSON.stringify(data));
+                };
+
+                enclaveFrame.contentWindow.postMessage(
+                    request, 
+                    'https://isle.idos.network',
+                    [port2]
+                );
+                log('Request sent: ' + JSON.stringify(request));
+            });
+        }
+
+
+    </script>
+</body>
+</html>
