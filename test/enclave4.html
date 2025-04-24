@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>4-6 idOS Enclave Message Tester</title>
+    <title>4-7 idOS Enclave Message Tester</title>
     <style>
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         .message-group { 
@@ -133,6 +133,9 @@
     </div>
 
     <script>
+        let enclaveFrame;
+        let enclaveReady = false;
+
         function log(msg) {
             const logEl = document.getElementById('log');
             logEl.innerHTML += `
@@ -143,8 +146,25 @@
             const container = document.getElementById('enclave-container');
             container.innerHTML = '';
             
-            log('🚀 Creating enclave iframe...');
+            console.log('🔍 Starting enclave initialization...');
             
+            // Create load promise before iframe
+            const loadPromise = new Promise((resolve) => {
+                window.addEventListener('message', function readyListener(event) {
+                    console.log('📨 Received message:', event.data, 'from origin:', event.origin);
+                    
+                    if (event.origin === 'https://isle.idos.network') {
+                        if (event.data?.type === 'idos:ready') {
+                            console.log('✅ Received ready event');
+                            enclaveReady = true;
+                            window.removeEventListener('message', readyListener);
+                            resolve();
+                        }
+                    }
+                });
+            });
+            
+            // Create and add iframe
             enclaveFrame = document.createElement('iframe');
             enclaveFrame.id = 'idos-enclave-iframe';
             enclaveFrame.src = 'https://isle.idos.network';
@@ -154,19 +174,12 @@
             enclaveFrame.style.height = '200px';
             enclaveFrame.style.border = '1px solid #ddd';
             
+            console.log('🔧 Adding iframe to container');
             container.appendChild(enclaveFrame);
-
-            // Listen for enclave ready event
-            window.addEventListener('message', function readyListener(event) {
-                if (event.origin === 'https://isle.idos.network' && event.data === 'ready') {
-                    enclaveReady = true;
-                    log('✅ Enclave ready event received');
-                    window.removeEventListener('message', readyListener);
-                    
-                    // Configure after ready
-                    configureEnclave();
-                }
-            });
+            log('🚀 Created enclave iframe, waiting for ready event...');
+            
+            // Wait for load and then configure
+            loadPromise.then(() => configureEnclave());
         }
 
         async function configureEnclave() {
@@ -373,3 +386,4 @@
     </script>
 </body>
 </html>
+``` 
