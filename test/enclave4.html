@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>idOS Enclave Message Tester</title>
+    <title>4-2 idOS Enclave Message Tester</title>
     <style>
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         .message-group { 
@@ -131,7 +131,41 @@
     </div>
 
     <script>
-        // ...existing log and initEnclave functions...
+        function log(msg) {
+            const logEl = document.getElementById('log');
+            logEl.innerHTML += `${new Date().toISOString()}: ${msg}\n`;
+        }
+
+        function initEnclave() {
+            const container = document.getElementById('enclave-container');
+            
+            // Create iframe
+            enclaveFrame = document.createElement('iframe');
+            enclaveFrame.id = 'idos-enclave-iframe';
+            enclaveFrame.src = 'https://isle.idos.network';
+            enclaveFrame.allow = 'publickey-credentials-get; storage-access';
+            enclaveFrame.sandbox = 'allow-scripts allow-same-origin allow-forms allow-modals allow-popups';
+            enclaveFrame.style.width = '100%';
+            enclaveFrame.style.height = '200px';
+            enclaveFrame.style.border = 'none';
+            
+            container.appendChild(enclaveFrame);
+
+            // Configure enclave
+            enclaveFrame.addEventListener('load', async () => {
+                try {
+                    await requestToEnclave({
+                        configure: {
+                            mode: "existing",
+                            theme: "light"
+                        }
+                    });
+                    log('Enclave initialized and configured');
+                } catch (error) {
+                    log('Error configuring enclave: ' + error);
+                }
+            });
+        }
 
         async function testStorage() {
             try {
@@ -277,7 +311,7 @@
                 log('Backup error: ' + error);
             }
         }
-        
+
         async function requestToEnclave(request) {
             return new Promise((resolve, reject) => {
                 const { port1, port2 } = new MessageChannel();
