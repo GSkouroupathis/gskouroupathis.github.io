@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>4-2 idOS Enclave Message Tester</title>
+    <title>4-3 idOS Enclave Message Tester</title>
     <style>
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         .message-group { 
@@ -139,6 +139,9 @@
         function initEnclave() {
             const container = document.getElementById('enclave-container');
             
+            // Clear container first
+            container.innerHTML = '';
+            
             // Create iframe
             enclaveFrame = document.createElement('iframe');
             enclaveFrame.id = 'idos-enclave-iframe';
@@ -151,6 +154,9 @@
             
             container.appendChild(enclaveFrame);
 
+            // Add loading indicator
+            log('Creating enclave iframe...');
+
             // Configure enclave
             enclaveFrame.addEventListener('load', async () => {
                 try {
@@ -160,9 +166,9 @@
                             theme: "light"
                         }
                     });
-                    log('Enclave initialized and configured');
+                    log('✅ Enclave initialized and configured');
                 } catch (error) {
-                    log('Error configuring enclave: ' + error);
+                    log('❌ Error configuring enclave: ' + error);
                 }
             });
         }
